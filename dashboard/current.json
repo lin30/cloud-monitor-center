@@ -1,8 +1,15 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
   "trade_permission": false,
-  "generated_at": "2026-09-29T14:03:00+08:00",
-  "source_as_of": "deployment_probe_only",
+  "generated_at": "2026-09-29T14:36:00+08:00",
+  "source_as_of": {
+    "daily": "DAILY|2026-09-29|premarket|v1",
+    "daily_generated_at": "2026-09-29T08:42:00+08:00",
+    "actual_model_as_of": "2026-09-29T10:12:00+08:00",
+    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-28|v1"
+  },
+  "mode": "simulation_only_public_dashboard",
+  "notice": "模拟盘/研究用途；不代表真实账户或交易授权。",
   "navigation": [
     {
       "id": "overview",
@@ -37,38 +44,260 @@
     "overview": {
       "items": [
         {
-          "title": "发布链路验证",
-          "summary": "GitHub Pages 静态出口已接管。当前仅发布非敏感空壳，不含Actual持仓。"
+          "title": "模拟盘Day0 / 起始快照",
+          "summary": "NAV 100.00万｜现金 76.3509万（76.35%）｜已投资 23.6491%｜Actual 5个。模拟绩效从2026-09-29 10:12起算；历史实盘盈亏不计入模拟收益。"
+        },
+        {
+          "title": "今日动作",
+          "summary": "今日无正式新增Action。冻结daily=DAILY|2026-09-29|premarket|v1，ACTIONABLE=0，model_orders=0；Portfolio成员的WAIT_PRICE仅是决策状态，不代表新增成交。"
+        },
+        {
+          "title": "Actual｜688183 生益电子｜Target",
+          "summary": "AI_PCB核心ALPHA｜当前权重 8.62% → NO_CHANGE → 8.62%｜Day0基准 107.79｜最近可证价 107.79（2026-09-29T10:12:00+08:00，Day0快照/非实时）｜模拟盈亏 0.0000万｜状态 initial_position_imported｜daily=WAIT_PRICE｜Target 20%。"
+        },
+        {
+          "title": "Actual｜159516 国泰中证半导体材料设备主题ETF｜Target",
+          "summary": "SEMICON_EQUIPMENT BASE｜当前权重 3.33% → NO_CHANGE → 3.33%｜Day0基准 0.665｜最近可证价 0.665（2026-09-29T10:12:00+08:00，Day0快照/非实时）｜模拟盈亏 0.0000万｜状态 initial_position_imported｜daily=WAIT_PRICE｜Target 15%。"
+        },
+        {
+          "title": "Actual｜159326 华夏中证电网设备主题ETF",
+          "summary": "HYBRID/WATCH_ONLY legacy import｜当前权重 1.85% → NO_CHANGE → 1.85%｜Day0基准 1.539｜最近可证价 1.539（2026-09-29T10:12:00+08:00，Day0快照/非实时）｜模拟盈亏 0.0000万｜状态 initial_position_imported_watch_only。"
+        },
+        {
+          "title": "Actual｜301150 中一科技",
+          "summary": "AI_PCB_UPSTREAM imported watch｜当前权重 8.01% → NO_CHANGE → 8.01%｜Day0基准 44.5｜最近可证价 44.5（2026-09-29T10:12:00+08:00，Day0快照/非实时）｜模拟盈亏 0.0000万｜状态 initial_position_imported_watch。"
+        },
+        {
+          "title": "Actual｜688700 东威科技｜Replacement",
+          "summary": "PCB_CAPEX replacement import｜当前权重 1.84% → NO_CHANGE → 1.84%｜Day0基准 61.47｜最近可证价 61.47（2026-09-29T10:12:00+08:00，Day0快照/非实时）｜模拟盈亏 0.0000万｜状态 initial_position_imported_replacement。"
+        },
+        {
+          "title": "Risk Family 实际暴露",
+          "summary": "AI_PCB 18.48%｜SEMICON_EQUIPMENT 3.33%｜AI_POWER_GRID 0.00%｜现金 76.35%。仅按16实际模型持仓角色聚合，不使用15 Target权重冒充实际暴露。"
+        },
+        {
+          "title": "Target Portfolio Book",
+          "summary": "目标/上限，不是持仓：688183 ALPHA 20%｜301200 ALPHA 20%｜688313 ALPHA 10%｜300394 ALPHA 3%｜159516 BASE 15%｜RESERVE 32%。今日价格门禁=DATA_QUALITY_BLOCKED，Target待下一正式daily按新鲜价格/证据重评。"
+        },
+        {
+          "title": "重要状态",
+          "summary": "Portfolio Book已建立且研究Thesis保留；9/28行情仅24/40可证且P0 price/session问题尚未完成自然验证，因此所有价格驱动正向动作fail_closed，model_orders=0。宏观/政策验证至07:44:30；ACTIVE141/OPEN35，09 active与11一致。 trade_permission=false。"
         }
       ]
     },
     "weekly": {
-      "items": []
+      "items": [
+        {
+          "title": "9月21-26日周审计｜v2.3活动合同：身份闭环正常，来源与自然验收仍待闭环",
+          "summary": "黄灯：09 active=141与11完全一致，OPEN=35、EXCLUDED=0；宏观/政策当前verified，但业绩主扫描仍partial且行业9/26 12:30有执行缺口。v2.3切换发生于周六18:50，尚无自然交易日端到端样本，当前自然验收0/5。模型仍100万现金、0持仓、0模拟成交。 注：该周报模型状态截止9/26，当时仍为100万现金/0持仓；9/29已用Day0模拟快照初始化，当前Actual以16为准。"
+        }
+      ]
     },
     "watchlist": {
-      "items": []
+      "items": [
+        {
+          "title": "A Actual｜688183 生益电子",
+          "summary": "实际模拟持仓 8.62%；同时是Target 20%；NO_CHANGE。"
+        },
+        {
+          "title": "A Actual｜159516 国泰中证半导体材料设备主题ETF",
+          "summary": "实际模拟持仓 3.33%；同时是Target 15%；NO_CHANGE。"
+        },
+        {
+          "title": "A Actual｜159326 华夏中证电网设备主题ETF",
+          "summary": "实际模拟持仓 1.85%；NO_CHANGE。"
+        },
+        {
+          "title": "A Actual｜301150 中一科技",
+          "summary": "实际模拟持仓 8.01%；NO_CHANGE。"
+        },
+        {
+          "title": "A Actual｜688700 东威科技",
+          "summary": "实际模拟持仓 1.84%；同时位于Replacement Watchlist；NO_CHANGE。"
+        },
+        {
+          "title": "B Target｜301200 大族数控",
+          "summary": "目标/上限 20%，不代表已持有；当前0股。 daily=WAIT_PRICE。"
+        },
+        {
+          "title": "B Target｜688313 仕佳光子",
+          "summary": "目标/上限 10%，不代表已持有；当前0股。 daily=WAIT_PRICE。"
+        },
+        {
+          "title": "B Target｜300394 天孚通信",
+          "summary": "目标/上限 3%，不代表已持有；当前0股。 daily=WAIT_PRICE。"
+        },
+        {
+          "title": "C Replacement｜301511 德福科技",
+          "summary": "候补观察，不是正式持仓/买入；需等待后续daily重新裁决。"
+        },
+        {
+          "title": "C Replacement｜688097 博众精工",
+          "summary": "候补观察，不是正式持仓/买入；需等待后续daily重新裁决。"
+        },
+        {
+          "title": "C Replacement｜300757 罗博特科",
+          "summary": "候补观察，不是正式持仓/买入；需等待后续daily重新裁决。"
+        },
+        {
+          "title": "C Replacement｜688808 联讯仪器",
+          "summary": "候补观察，不是正式持仓/买入；需等待后续daily重新裁决。"
+        }
+      ]
     },
     "opportunities": {
-      "items": []
+      "items": [
+        {
+          "title": "301511 德福科技",
+          "summary": "当前Replacement Watchlist研究对象；不是正式持仓/买入。"
+        },
+        {
+          "title": "688097 博众精工",
+          "summary": "当前Replacement Watchlist研究对象；不是正式持仓/买入。"
+        },
+        {
+          "title": "300757 罗博特科",
+          "summary": "当前Replacement Watchlist研究对象；不是正式持仓/买入。"
+        },
+        {
+          "title": "688808 联讯仪器",
+          "summary": "当前Replacement Watchlist研究对象；不是正式持仓/买入。"
+        },
+        {
+          "title": "688700 东威科技",
+          "summary": "Replacement身份与Actual重叠：以Actual为主卡；候补身份仅作次级标签。"
+        }
+      ]
     },
     "industry": {
-      "items": []
+      "items": [
+        {
+          "title": "PCB设备/耗材",
+          "summary": "PCB设备/耗材 CORE/WAIT data_quality"
+        },
+        {
+          "title": "国产半导体设备",
+          "summary": "国产半导体设备 CORE/WAIT data_quality+valuation"
+        },
+        {
+          "title": "电源/HVDC/电力/燃机",
+          "summary": "电源/HVDC/电力/燃机 CORE/RISK policy"
+        },
+        {
+          "title": "PCB板厂",
+          "summary": "PCB板厂 CORE/WAIT data_quality"
+        },
+        {
+          "title": "光芯片/器件/CPO/OCS POSITIVE/WATCH",
+          "summary": "光芯片/器件/CPO/OCS POSITIVE/WATCH"
+        },
+        {
+          "title": "高速光模块",
+          "summary": "高速光模块 POSITIVE/WATCH policy+market_structure"
+        },
+        {
+          "title": "光模块制造/测试设备 POSITIVE/WATCH",
+          "summary": "光模块制造/测试设备 POSITIVE/WATCH"
+        },
+        {
+          "title": "CCL/电子布/树脂/铜箔 POSITIVE/WAIT",
+          "summary": "CCL/电子布/树脂/铜箔 POSITIVE/WAIT"
+        },
+        {
+          "title": "国产GPU/ASIC NEUTRAL/WATCH",
+          "summary": "国产GPU/ASIC NEUTRAL/WATCH"
+        },
+        {
+          "title": "液冷 NEUTRAL/WATCH",
+          "summary": "液冷 NEUTRAL/WATCH"
+        },
+        {
+          "title": "高速铜连接 NEUTRAL/WAIT",
+          "summary": "高速铜连接 NEUTRAL/WAIT"
+        },
+        {
+          "title": "HBM/先进封装/测试 NEUTRAL/WATCH",
+          "summary": "HBM/先进封装/测试 NEUTRAL/WATCH"
+        },
+        {
+          "title": "企业级存储 NEUTRAL/WAIT",
+          "summary": "企业级存储 NEUTRAL/WAIT"
+        },
+        {
+          "title": "光纤/光缆/材料 LOW/WAIT",
+          "summary": "光纤/光缆/材料 LOW/WAIT"
+        },
+        {
+          "title": "国产服务器/超节点 LOW/WATCH",
+          "summary": "国产服务器/超节点 LOW/WATCH"
+        },
+        {
+          "title": "国产算力网络 LOW/WATCH",
+          "summary": "国产算力网络 LOW/WATCH"
+        },
+        {
+          "title": "低纯度/二阶映射 LOW/WAIT",
+          "summary": "低纯度/二阶映射 LOW/WAIT"
+        }
+      ]
     },
     "robotics": {
-      "items": []
+      "items": [
+        {
+          "title": "产业生产者",
+          "summary": "active_partial_source_consumer_ready_continuity_natural_verify_evidence_ready_pending_independent_verification"
+        },
+        {
+          "title": "交易日消费者",
+          "summary": "completed_daily_report_handoff_consumed_source_partial_price_execution_v1_market_weak_confirmed"
+        },
+        {
+          "title": "主动分母",
+          "summary": "daily_active_40_research_27_event_32_anchor_1"
+        },
+        {
+          "title": "当前交接",
+          "summary": "ROBOT_REPORT_HANDOFF|2026-09-28|v1"
+        }
+      ]
     },
     "status": {
       "items": [
         {
-          "title": "部署状态",
-          "summary": "deployment_probe=true; trade_permission=false; NEW_content=0; Actual未公开"
+          "title": "AI链当前范围",
+          "summary": "ACTIVE 141｜OPEN 35｜active_vs_11_diff=0"
+        },
+        {
+          "title": "行情门禁",
+          "summary": "DATA_QUALITY_BLOCKED｜latest_completed_session=2026-09-28｜market=24/40｜positive_price_actions_allowed=false"
+        },
+        {
+          "title": "宏观/政策",
+          "summary": "verified to 2026-09-29T07:44:30+08:00"
+        },
+        {
+          "title": "业绩覆盖",
+          "summary": "partial; full-pool coverage_end not proven"
+        },
+        {
+          "title": "发布架构",
+          "summary": "Google Sheets → 普通云端automation/connector → GitHub contents API → main → GitHub Pages。无自定义workflow；trade_permission=false。"
         }
       ]
     }
   },
   "audit": {
-    "deployment_probe": true,
-    "actual_portfolio_published": false,
-    "new_content": 0
+    "actual_first": true,
+    "actual_tool_count": 5,
+    "cash_wan": 76.3509,
+    "invested_pct": 23.6491,
+    "day0_opening_import_count": 5,
+    "target_actual_separated": true,
+    "replacement_count": 5,
+    "canonical_688097": "博众精工",
+    "canonical_conflict_count": 0,
+    "new_content": 0,
+    "public_actual_portfolio_publish": true,
+    "sensitive_account_fields_published": false
   }
 }
