@@ -1,7 +1,7 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
   "trade_permission": false,
-  "generated_at": "2026-09-29T14:36:00+08:00",
+  "generated_at": "2026-09-29T14:38:00+08:00",
   "source_as_of": {
     "daily": "DAILY|2026-09-29|premarket|v1",
     "daily_generated_at": "2026-09-29T08:42:00+08:00",
@@ -73,7 +73,7 @@
         },
         {
           "title": "Risk Family 实际暴露",
-          "summary": "AI_PCB 18.48%｜SEMICON_EQUIPMENT 3.33%｜AI_POWER_GRID 0.00%｜现金 76.35%。仅按16实际模型持仓角色聚合，不使用15 Target权重冒充实际暴露。"
+          "summary": "AI_PCB 18.48%｜SEMICON_EQUIPMENT 3.33%｜HYBRID/OTHER 1.85%｜现金 76.35%。仅按16实际模型持仓角色聚合；159326当前为HYBRID/WATCH_ONLY，不强行归入正式电网BASE；不使用15 Target权重冒充实际暴露。"
         },
         {
           "title": "Target Portfolio Book",
