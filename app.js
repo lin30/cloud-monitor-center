@@ -28,6 +28,9 @@ function statusTone(s){
   return {"正常":"good","清晰":"good","部分覆盖":"warn","待确认":"warn","观察":"info","暂停新增动作":"warn","已持有":"good","未持有":"muted","候补":"info","不变":"muted"}[s]||"muted";
 }
 function statusBadge(s){return badge(s,statusTone(s))}
+function currentStateBadge(s){
+  return statusBadge(["持有","已持有","未持有","观察","待确认","不变"].includes(s)?s:"待确认");
+}
 function roleBadge(s){
   if(!s)return"—";
   const tone=s.includes("核心")?"strong":s.includes("BASE")||s.includes("Beta")?"info":s.includes("观察")||s.includes("候补")?"muted":"muted";
@@ -40,10 +43,6 @@ function overview(p){
     search:[x.domain,x.label,x.state].join(" "),
     cells:[`<strong>${esc(x.label)}</strong>`,x.current_pct==null?"—":`<strong>${pct(x.current_pct)}</strong>`,esc(x.budget_range||"—"),statusBadge(x.state),esc(x.note||"")]
   }));
-  const actionRows=(o.actions||[]).map(x=>({
-    search:[x.name,x.ticker,x.action,x.source].join(" "),
-    cells:[`<strong>${esc(x.name)}</strong>${x.ticker?`<div class="sub">${esc(x.ticker)}</div>`:""}`,statusBadge(x.action),esc(x.condition||"—"),esc(x.source||"—"),esc(x.funding_source||"—")]
-  }));
   const actualRows=(o.actual||[]).map(x=>({
     search:[x.ticker,x.name,x.role,x.domain].join(" "),
     cells:[
@@ -51,7 +50,7 @@ function overview(p){
       esc(x.domain_label||x.domain||"—"),
       '<strong>'+pct(x.weight_pct)+'</strong>',
       roleBadge(x.role),
-      statusBadge(x.today_action),
+      currentStateBadge(x.current_state),
       esc(x.portfolio_state||"—")
     ]
   }));
@@ -74,9 +73,8 @@ function overview(p){
     card("当前资金倾向",'<div class="section-note">预算是动态风险区间，不是必须买满的配额；弱方向可以为0。</div>'+table(["方向","当前暴露","预算区间","状态","说明"],budgetRows),12)+
     card("今日结论",
       '<div class="decision '+esc(o.decision.tone||"neutral")+'"><div class="decision-title">'+esc(o.decision.title)+'</div><div>'+esc(o.decision.summary)+'</div>'+(o.decision.note?'<div class="decision-note">'+esc(o.decision.note)+'</div>':'')+'</div>',12)+
-    card("今日资金动作",table(["标的","动作","条件","来源","资金来源"],actionRows),12)+
     card("Actual Model Portfolio · 当前实际模拟持仓",
-      table(["标的","领域","当前权重","角色","今日动作","去留/竞争状态"],actualRows),12)+
+      table(["标的","领域","当前权重","角色","当前状态","去留/竞争状态"],actualRows),12)+
     card("Portfolio 席位 · 新机会先竞争旧席位",
       table(["席位","当前第一/占有者","竞争者","状态","说明"],seatRows),12)+
     card("Risk Family · 实际暴露",
@@ -100,7 +98,7 @@ function watchlist(p){
   const w=p.modules.watchlist;
   const actual=(w.actual||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
-    cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',roleBadge(x.role),pct(x.current_pct),x.target_pct==null?'—':pct(x.target_pct),statusBadge(x.today_action),esc(x.next_trigger||"")]
+    cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',roleBadge(x.role),pct(x.current_pct),x.target_pct==null?'—':pct(x.target_pct),currentStateBadge(x.current_state),esc(x.next_trigger||"")]
   }));
   const target=(w.target||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
@@ -111,7 +109,7 @@ function watchlist(p){
     cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',statusBadge(x.state),x.current_pct?pct(x.current_pct):"—",esc(x.note||"")]
   }));
   return '<div class="grid">'+
-    card("A · Actual 当前持仓",table(["标的","角色","当前权重","目标上限","今日动作","下一关注"],actual),12)+
+    card("A · Actual 当前持仓",table(["标的","角色","当前权重","目标上限","当前状态","下一关注"],actual),12)+
     card("B · Target 目标组合",'<div class="section-note">目标/上限，不等于已持有。</div>'+table(["标的","角色","目标","当前","状态","说明"],target),12)+
     card("C · Replacement 候补池",'<div class="section-note">候补观察，不等于正式买入建议。</div>'+table(["标的","状态","当前权重","说明"],repl),12)+
   '</div>';

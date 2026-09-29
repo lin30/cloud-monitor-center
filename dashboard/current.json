@@ -9,7 +9,7 @@
     "contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
     "daily": "DAILY|2026-09-29|premarket|v1",
     "daily_generated_at": "2026-09-29T08:42:00+08:00",
-    "actual_model_as_of": "2026-09-29T16:04:00+08:00",
+    "actual_model_as_of": "2026-09-29",
     "market_recovery_as_of": "2026-09-29T12:33:44.184+08:00",
     "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-28|v1"
   },
@@ -53,7 +53,7 @@
         "holding_count": 5,
         "core_seat_count": 3,
         "max_core_seats": 7,
-        "as_of": "2026-09-29T16:04:00+08:00"
+        "as_of": "2026-09-29"
       },
       "domain_budget": [
         {
@@ -70,7 +70,7 @@
           "current_pct": 0,
           "budget_range": "0–15%",
           "state": "观察 · 待重算",
-          "note": "机器人、端侧AI、平台AI统一竞争应用预算；没有正式daily动作前不为配额强行建仓。"
+          "note": "机器人、端侧AI、平台AI统一竞争应用预算；正式席位待下一daily确认。"
         },
         {
           "domain": "CASH",
@@ -83,36 +83,10 @@
       ],
       "decision": {
         "tone": "warn",
-        "title": "盘前模型无新增动作；16:04已同步三笔实际持仓调整",
-        "summary": "大族数控新增100股，中一科技减半，电网设备ETF清仓。当前模拟盘约20.07万已投资、79.89万现金；早盘冻结结论仍保持不变。",
+        "title": "当前模拟组合以Actual持仓结果为准",
+        "summary": "当前模拟盘约20.07万已投资、79.89万现金；早盘冻结结论保持不变，正式席位待下一daily确认。",
         "note": "午间市场数据已补齐，但不会倒改早盘冻结决策；下一自然08:00再用完整价格会话重新判断。"
       },
-      "actions": [
-        {
-          "name": "大族数控",
-          "ticker": "301200",
-          "action": "已买入",
-          "condition": "100股 @ 229.96（用户同步）",
-          "source": "16:04持仓同步",
-          "funding_source": "现金"
-        },
-        {
-          "name": "中一科技",
-          "ticker": "301150",
-          "action": "已减仓",
-          "condition": "卖出900股 @ 44.24，持仓减半（用户同步）",
-          "source": "16:04持仓同步",
-          "funding_source": "回收现金"
-        },
-        {
-          "name": "电网设备ETF",
-          "ticker": "159326",
-          "action": "已清仓",
-          "condition": "卖出12000份 @ 1.544（用户同步）",
-          "source": "16:04持仓同步",
-          "funding_source": "回收现金"
-        }
-      ],
       "actual": [
         {
           "ticker": "688183",
@@ -121,12 +95,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 8.6232,
           "role": "PCB核心进攻",
-          "today_action": "不变",
           "portfolio_state": "保留；当前实际持仓",
           "simulation_cost": "107.79",
           "last_price": "107.79",
           "simulation_pnl": "0.00 万",
-          "target_pct": 20
+          "target_pct": 20,
+          "current_state": "持有"
         },
         {
           "ticker": "301200",
@@ -135,12 +109,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 2.2996,
           "role": "PCB设备核心进攻",
-          "today_action": "已买入",
-          "portfolio_state": "新进入Actual；正式席位待下一daily确认",
+          "portfolio_state": "当前实际持仓；正式席位待下一daily确认",
           "simulation_cost": "229.96",
           "last_price": "229.96",
           "simulation_pnl": "0.00 万",
-          "target_pct": 20
+          "target_pct": 20,
+          "current_state": "持有"
         },
         {
           "ticker": "159516",
@@ -149,12 +123,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 3.325,
           "role": "半导体设备底仓",
-          "today_action": "不变",
           "portfolio_state": "保留",
           "simulation_cost": "0.665",
           "last_price": "0.665",
           "simulation_pnl": "0.00 万",
-          "target_pct": 15
+          "target_pct": 15,
+          "current_state": "持有"
         },
         {
           "ticker": "301150",
@@ -163,12 +137,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 3.9816,
           "role": "PCB上游观察",
-          "today_action": "已减仓",
-          "portfolio_state": "减半后继续观察；与更强PCB席位竞争",
+          "portfolio_state": "当前持仓观察；与更强PCB席位竞争",
           "simulation_cost": "44.50",
           "last_price": "44.24",
           "simulation_pnl": "-0.0234 万",
-          "target_pct": null
+          "target_pct": null,
+          "current_state": "观察"
         },
         {
           "ticker": "688700",
@@ -177,12 +151,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 1.8441,
           "role": "PCB设备候补持仓",
-          "today_action": "不变",
           "portfolio_state": "Actual持仓；与大族数控竞争设备席位",
           "simulation_cost": "61.47",
           "last_price": "61.47",
           "simulation_pnl": "0.00 万",
-          "target_pct": null
+          "target_pct": null,
+          "current_state": "持有"
         }
       ],
       "seats": [
@@ -280,7 +254,7 @@
           "target_pct": 20,
           "current_pct": 2.2996,
           "state": "已持有",
-          "note": "16:04已同步100股；正式席位仍待下一daily确认。"
+          "note": "当前实际持仓；正式席位仍待下一daily确认。"
         },
         {
           "ticker": "688313",
@@ -311,17 +285,17 @@
         }
       ],
       "focus": [
-        "16:04实际模拟组合已更新：电网ETF清仓、中一减半、大族新增100股；网页以16/17为当前Actual真源。",
+        "当前模拟组合有5个实际持仓；网页展示当前Actual结果与Portfolio竞争状态。",
         "当前daily没有v3预算与席位字段，因此资金区间和7席仅做合同兼容展示，全部等待下一正式08:00决策确认。",
-        "午间市场数据已经补齐40/40，但不会倒改早盘冻结结论；今日模型新增动作仍为0。",
+        "午间市场数据已经补齐40/40，但不会倒改早盘冻结结论；待下一正式daily确认。",
         "光互联旧Target不再等于当前排序，新易盛/中际旭创/天孚通信/仕佳光子进入下一daily的席位竞争。",
-        "机器人、端侧AI、平台AI只进入应用研究竞争；没有正式daily身份时不冒充持仓或买入动作。"
+        "机器人、端侧AI、平台AI只进入应用研究竞争；没有正式daily身份时不冒充持仓。"
       ]
     },
     "weekly": {
       "tone": "warn",
       "title": "上周系统仍有局部链路缺口，但研究身份保持一致",
-      "summary": "截至9月26日，持续跟踪池与核验清单一致；宏观/政策可用，业绩覆盖仍是部分覆盖。9月29日已进入v3统一组合框架，并完成Day0后的首次实际持仓同步。",
+      "summary": "截至9月26日，持续跟踪池与核验清单一致；宏观/政策可用，业绩覆盖仍是部分覆盖。9月29日已进入v3统一组合框架，当前展示Actual持仓结果。",
       "metrics": [
         {
           "label": "持续跟踪",
@@ -354,8 +328,8 @@
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
           "target_pct": 20,
-          "today_action": "不变",
-          "next_trigger": "价格与基本面条件共同满足后再评估加仓"
+          "next_trigger": "价格与基本面条件共同满足后再评估加仓",
+          "current_state": "持有"
         },
         {
           "ticker": "301200",
@@ -363,8 +337,8 @@
           "role": "PCB设备核心进攻",
           "current_pct": 2.2996,
           "target_pct": 20,
-          "today_action": "已买入",
-          "next_trigger": "新进入Actual；下一正式daily确认设备席位与后续仓位"
+          "next_trigger": "当前实际持仓；下一正式daily确认设备席位与预算",
+          "current_state": "持有"
         },
         {
           "ticker": "159516",
@@ -372,8 +346,8 @@
           "role": "半导体设备底仓",
           "current_pct": 3.325,
           "target_pct": 15,
-          "today_action": "不变",
-          "next_trigger": "下一正式daily确认底仓席位与预算"
+          "next_trigger": "下一正式daily确认底仓席位与预算",
+          "current_state": "持有"
         },
         {
           "ticker": "301150",
@@ -381,8 +355,8 @@
           "role": "PCB上游观察",
           "current_pct": 3.9816,
           "target_pct": null,
-          "today_action": "已减仓",
-          "next_trigger": "减半后继续验证HVLP/RTF兑现与相对Alpha"
+          "next_trigger": "继续验证HVLP/RTF兑现与相对Alpha",
+          "current_state": "观察"
         },
         {
           "ticker": "688700",
@@ -390,8 +364,8 @@
           "role": "PCB设备候补持仓",
           "current_pct": 1.8441,
           "target_pct": null,
-          "today_action": "不变",
-          "next_trigger": "与大族数控比较订单兑现、相对Alpha与赔率"
+          "next_trigger": "与大族数控比较订单兑现、相对Alpha与赔率",
+          "current_state": "持有"
         }
       ],
       "target": [
@@ -411,7 +385,7 @@
           "target_pct": 20,
           "current_pct": 2.2996,
           "state": "已持有",
-          "note": "16:04已同步100股；旧20%只是上限，不代表必须补满。"
+          "note": "当前实际持仓；旧20%只是上限，不代表必须补满。"
         },
         {
           "ticker": "688313",
@@ -769,7 +743,7 @@
         {
           "label": "正式建议数量",
           "value": "1",
-          "note": "市场偏弱后从2降至1；不等于light组合已买入"
+          "note": "市场偏弱后从2降至1；研究建议不等于light组合持仓。"
         }
       ]
     },
@@ -778,7 +752,7 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "16:04已同步大族买入、中一减半、电网ETF清仓；Actual与流水一致"
+          "detail": "当前Actual持仓与权重已展示；Portfolio正式席位待下一daily确认。"
         },
         {
           "item": "价格 / 市场数据",
