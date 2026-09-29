@@ -2,16 +2,18 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-29T16:20:33+08:00",
+  "generated_at": "2026-09-30T06:35:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 仅研究",
   "source_as_of": {
     "contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
     "daily": "DAILY|2026-09-29|premarket|v1",
     "daily_generated_at": "2026-09-29T08:42:00+08:00",
-    "actual_model_as_of": "2026-09-29",
-    "market_recovery_as_of": "2026-09-29T12:33:44.184+08:00",
-    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-28|v1"
+    "actual_model_as_of": "2026-09-29T16:04:00+08:00",
+    "last_complete_market_snapshot": "2026-09-28 recovered 40/40 at 2026-09-29T12:33:44.184+08:00",
+    "current_market_session": "2026-09-29 incomplete durable snapshot",
+    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
+    "robot_formal_daily": "ROBOT_DAILY|2026-09-28|2300|v1"
   },
   "navigation": [
     {
@@ -83,9 +85,9 @@
       ],
       "decision": {
         "tone": "warn",
-        "title": "当前模拟组合以Actual持仓结果为准",
-        "summary": "当前模拟盘约20.07万已投资、79.89万现金；早盘冻结结论保持不变，正式席位待下一daily确认。",
-        "note": "午间市场数据已补齐，但不会倒改早盘冻结决策；下一自然08:00再用完整价格会话重新判断。"
+        "title": "组合状态延续，等待下一正式日决策",
+        "summary": "当前模拟盘继续以已公开的Actual结果为准。9月29日晚间当日行情没有形成可回读的完整快照，因此不据此改写组合结论。",
+        "note": "最新完整可复核市场基线仍是9月28日40/40恢复结果；9月30日正式盘前决策尚未生成。"
       },
       "actual": [
         {
@@ -237,59 +239,12 @@
           "note": "未部署资金；实际组合净值轻微低于100万，因此各项合计按16当前口径展示。"
         }
       ],
-      "target": [
-        {
-          "ticker": "688183",
-          "name": "生益电子",
-          "role": "核心进攻",
-          "target_pct": 20,
-          "current_pct": 8.6232,
-          "state": "已持有",
-          "note": "旧Target兼容详情；待下一正式daily确认v3席位。"
-        },
-        {
-          "ticker": "301200",
-          "name": "大族数控",
-          "role": "核心进攻",
-          "target_pct": 20,
-          "current_pct": 2.2996,
-          "state": "已持有",
-          "note": "当前实际持仓；正式席位仍待下一daily确认。"
-        },
-        {
-          "ticker": "688313",
-          "name": "仕佳光子",
-          "role": "NPO/CPO进攻",
-          "target_pct": 10,
-          "current_pct": 0,
-          "state": "未持有",
-          "note": "旧Target兼容详情；光互联待与新易盛/中际旭创等重新竞争。"
-        },
-        {
-          "ticker": "300394",
-          "name": "天孚通信",
-          "role": "高质量观察",
-          "target_pct": 3,
-          "current_pct": 0,
-          "state": "未持有",
-          "note": "旧Target兼容详情；不代表当前光互联排名。"
-        },
-        {
-          "ticker": "159516",
-          "name": "半导体设备ETF",
-          "role": "半导体设备底仓",
-          "target_pct": 15,
-          "current_pct": 3.325,
-          "state": "已持有",
-          "note": "旧Target兼容详情；下一daily再确认席位。"
-        }
-      ],
       "focus": [
-        "当前模拟组合有5个实际持仓；网页展示当前Actual结果与Portfolio竞争状态。",
-        "当前daily没有v3预算与席位字段，因此资金区间和7席仅做合同兼容展示，全部等待下一正式08:00决策确认。",
-        "午间市场数据已经补齐40/40，但不会倒改早盘冻结结论；待下一正式daily确认。",
-        "光互联旧Target不再等于当前排序，新易盛/中际旭创/天孚通信/仕佳光子进入下一daily的席位竞争。",
-        "机器人、端侧AI、平台AI只进入应用研究竞争；没有正式daily身份时不冒充持仓。"
+        "当前模拟组合仍为5个实际研究持仓，公开页只展示模拟盘结果，不展示任何当日交易执行流水。",
+        "9月29日晚间当日行情未形成完整可回读快照，赛道状态不使用不完整数据强行重算。",
+        "FC-BGA公司映射完成补证：深南电路已有客户认证与量产推进证据；兴森科技仍处于客户导入和样品交付阶段，尚未证明大批量生产。",
+        "机器人9月29日产线扫描完成，40个主动对象中39个范围正常、1个对象局部隔离；未发现新的公司一级硬证据。",
+        "截至本次同步，机器人9月29日23:00正式日报回执未在运行记录中出现，因此页面不把生产者结果冒充正式日报。"
       ]
     },
     "weekly": {
@@ -328,7 +283,7 @@
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
           "target_pct": 20,
-          "next_trigger": "价格与基本面条件共同满足后再评估加仓",
+          "next_trigger": "价格与基本面条件共同满足后再评估资本占用",
           "current_state": "持有"
         },
         {
@@ -613,7 +568,7 @@
           "sector": "HBM/先进封装/测试",
           "long_term": "中性",
           "current": "观察",
-          "reason": "宏观深扫出现新增HBM产业信号，仍需A股映射与赔率确认"
+          "reason": "9月29日补证显示深南电路已有FC-BGA客户认证与量产推进，兴森科技仍在客户导入和样品阶段；继续等待订单、收入与规模量产验证。"
         },
         {
           "domain": "算力基础设施",
@@ -675,8 +630,8 @@
     },
     "robotics": {
       "tone": "warn",
-      "title": "产业基本面仍可用，但市场节奏偏弱；重点对象继续竞争应用席位",
-      "summary": "最新机器人日报已消费9月28日交接。40个主动对象中39个范围正常、五洲新春仅做局部隔离；当天没有新增一级硬证据。雷赛保持核心研究，但价格执行仍待核验。",
+      "title": "产业跟踪继续有效，正式日报仍以9月28日为最近已确认版本",
+      "summary": "9月29日机器人产业扫描已完成：40个主动对象中39个范围正常、1个对象局部隔离，没有新增公司一级硬证据。由于本次同步未找到9月29日23:00正式日报回执，重点梯队沿用已验证研究状态，不升级为新的组合身份。",
       "rows": [
         {
           "tier": "核心",
@@ -721,29 +676,29 @@
       ],
       "metrics": [
         {
-          "label": "市场节奏",
-          "value": "偏弱",
-          "note": "9月24日与9月28日两个连续交易日确认"
-        },
-        {
           "label": "主动监控",
           "value": "40",
-          "note": "39个范围正常，五洲新春局部隔离"
+          "note": "39个范围正常，1个对象局部隔离"
         },
         {
           "label": "新增一级硬证据",
           "value": "0",
-          "note": "9月28日未发生阶段升级或降级"
+          "note": "9月29日未发生新的公司级阶段升级"
         },
         {
-          "label": "最新日报",
-          "value": "已完成",
-          "note": "9月28日23:00已消费同日交接"
+          "label": "最新产业扫描",
+          "value": "9月29日已完成",
+          "note": "生产端结果已形成"
         },
         {
-          "label": "正式建议数量",
-          "value": "1",
-          "note": "市场偏弱后从2降至1；研究建议不等于light组合持仓。"
+          "label": "最近正式日报",
+          "value": "9月28日",
+          "note": "未找到9月29日23:00正式日报回执，因此不冒充更新"
+        },
+        {
+          "label": "组合身份",
+          "value": "竞争观察",
+          "note": "机器人研究对象尚未由light正式日决策赋予组合席位"
         }
       ]
     },
@@ -752,17 +707,17 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "当前Actual持仓与权重已展示；Portfolio正式席位待下一daily确认。"
+          "detail": "公开页继续展示已确认的模拟盘Actual结果；不公开任何具体交易执行流水。"
         },
         {
           "item": "价格 / 市场数据",
           "status": "待确认",
-          "detail": "午间市场包已补齐40/40，但早盘价格会话的自然验证仍待下一08:00；不倒改今日冻结决策"
+          "detail": "9月29日当日行情未形成完整可回读快照；最近完整可复核基线仍为9月28日40/40恢复结果。"
         },
         {
           "item": "产业扫描",
-          "status": "正常",
-          "detail": "产业与市场计算已恢复完整；第二批原始归档仍有耐久性缺口，但不否定已验证市场结果"
+          "status": "部分覆盖",
+          "detail": "9月29日产业研究完成并新增FC-BGA公司映射补证；当日市场结构因完整行情未持久化而不重算。"
         },
         {
           "item": "宏观 / 政策",
@@ -777,12 +732,12 @@
         {
           "item": "机器人链",
           "status": "部分覆盖",
-          "detail": "39/40主动对象范围正常，单票局部隔离；日报与交接可继续使用"
+          "detail": "9月29日产线扫描完成且39/40范围正常；本次同步未找到9月29日23:00正式日报回执，页面沿用最近已确认日报。"
         },
         {
           "item": "页面发布",
-          "status": "正常",
-          "detail": "独立GitHub Pages展示层；仅消费light两张业务表，不读取NEW业务数据"
+          "status": "更新中",
+          "detail": "独立GitHub Pages展示层；只消费light两张业务表，公共投影执行严格白名单过滤。"
         }
       ],
       "technical": {
@@ -800,10 +755,13 @@
         "macro_deep": "verified through 2026-09-29T12:33:58+08:00",
         "policy_projection": "latest durable 05 at 15:33; 92 projection pending recovery",
         "earnings_main": "partial; full-pool coverage_end not proven",
-        "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-28|v1",
+        "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
         "robot_daily": "ROBOT_DAILY|2026-09-28|2300|v1",
         "trade_permission": false,
-        "NEW_content": 0
+        "NEW_content": 0,
+        "market_current_session": "2026-09-29 durable_full_snapshot_missing",
+        "market_last_complete": "2026-09-28 40/40 recovered at 2026-09-29T12:33:44.184+08:00",
+        "public_projection_policy": "simulation_only_allowlist_no_execution_ledger"
       }
     }
   },
@@ -824,6 +782,8 @@
     "NEW_content": 0,
     "public_actual_portfolio_publish": true,
     "sensitive_account_fields_published": false,
-    "trade_permission": false
+    "trade_permission": false,
+    "public_projection_allowlist": true,
+    "execution_ledger_fields_published": false
   }
 }
