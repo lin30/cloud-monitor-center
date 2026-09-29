@@ -2,7 +2,7 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_table_v2",
   "trade_permission": false,
-  "generated_at": "2026-09-29T14:58:00+08:00",
+  "generated_at": "2026-09-29T15:01:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 研究用途",
   "source_as_of": {
@@ -55,7 +55,7 @@
         "tone": "warn",
         "title": "今日无正式新增动作",
         "summary": "组合保持不变。价格数据完整性尚未完成自然验证，今天不新增模型买入。",
-        "note": "WAIT_PRICE 只表示等待价格条件确认，不代表卖出或买入指令。"
+        "note": "“等待价格确认”只表示当前不满足新增动作条件，不代表卖出或买入指令。"
       },
       "actual": [
         {
@@ -73,7 +73,7 @@
         {
           "ticker": "159516",
           "name": "国泰中证半导体材料设备主题ETF",
-          "role": "BASE · 半导体设备",
+          "role": "半导体设备底仓",
           "weight_pct": 3.325,
           "simulation_cost": "0.665",
           "last_price": "0.665",
@@ -85,7 +85,7 @@
         {
           "ticker": "159326",
           "name": "华夏中证电网设备主题ETF",
-          "role": "观察 · HYBRID",
+          "role": "观察持仓 · 电网设备",
           "weight_pct": 1.8468,
           "simulation_cost": "1.539",
           "last_price": "1.539",
@@ -97,7 +97,7 @@
         {
           "ticker": "301150",
           "name": "中一科技",
-          "role": "观察 · AI PCB上游",
+          "role": "观察持仓 · AI PCB上游",
           "weight_pct": 8.01,
           "simulation_cost": "44.50",
           "last_price": "44.50",
@@ -149,7 +149,7 @@
         {
           "ticker": "688183",
           "name": "生益电子",
-          "role": "ALPHA · 核心进攻",
+          "role": "核心进攻",
           "target_pct": 20,
           "current_pct": 8.6232,
           "state": "已持有",
@@ -158,7 +158,7 @@
         {
           "ticker": "301200",
           "name": "大族数控",
-          "role": "ALPHA · 核心进攻",
+          "role": "核心进攻",
           "target_pct": 20,
           "current_pct": 0,
           "state": "未持有",
@@ -167,7 +167,7 @@
         {
           "ticker": "688313",
           "name": "仕佳光子",
-          "role": "ALPHA · NPO/CPO",
+          "role": "NPO/CPO进攻",
           "target_pct": 10,
           "current_pct": 0,
           "state": "未持有",
@@ -176,7 +176,7 @@
         {
           "ticker": "300394",
           "name": "天孚通信",
-          "role": "ALPHA · 高质量观察",
+          "role": "高质量观察",
           "target_pct": 3,
           "current_pct": 0,
           "state": "未持有",
@@ -185,7 +185,7 @@
         {
           "ticker": "159516",
           "name": "半导体材料设备ETF",
-          "role": "BASE · 半导体设备",
+          "role": "半导体设备底仓",
           "target_pct": 15,
           "current_pct": 3.325,
           "state": "已持有",
@@ -216,7 +216,7 @@
         {
           "label": "持续跟踪",
           "value": "141",
-          "note": "09与11一致"
+          "note": "持续跟踪台账与核验清单一致"
         },
         {
           "label": "开放观察",
@@ -250,7 +250,7 @@
         {
           "ticker": "159516",
           "name": "半导体材料设备ETF",
-          "role": "BASE · 半导体设备",
+          "role": "半导体设备底仓",
           "current_pct": 3.325,
           "target_pct": 15,
           "today_action": "不变",
@@ -259,7 +259,7 @@
         {
           "ticker": "159326",
           "name": "电网设备ETF",
-          "role": "观察 · HYBRID",
+          "role": "观察持仓 · 电网设备",
           "current_pct": 1.8468,
           "target_pct": null,
           "today_action": "不变",
@@ -268,7 +268,7 @@
         {
           "ticker": "301150",
           "name": "中一科技",
-          "role": "观察 · AI PCB上游",
+          "role": "观察持仓 · AI PCB上游",
           "current_pct": 8.01,
           "target_pct": null,
           "today_action": "不变",
@@ -288,7 +288,7 @@
         {
           "ticker": "688183",
           "name": "生益电子",
-          "role": "ALPHA · 核心进攻",
+          "role": "核心进攻",
           "target_pct": 20,
           "current_pct": 8.6232,
           "state": "已持有",
@@ -297,7 +297,7 @@
         {
           "ticker": "301200",
           "name": "大族数控",
-          "role": "ALPHA · 核心进攻",
+          "role": "核心进攻",
           "target_pct": 20,
           "current_pct": 0,
           "state": "未持有",
@@ -306,7 +306,7 @@
         {
           "ticker": "688313",
           "name": "仕佳光子",
-          "role": "ALPHA · NPO/CPO",
+          "role": "NPO/CPO进攻",
           "target_pct": 10,
           "current_pct": 0,
           "state": "未持有",
@@ -315,7 +315,7 @@
         {
           "ticker": "300394",
           "name": "天孚通信",
-          "role": "ALPHA · 高质量观察",
+          "role": "高质量观察",
           "target_pct": 3,
           "current_pct": 0,
           "state": "未持有",
@@ -324,7 +324,7 @@
         {
           "ticker": "159516",
           "name": "半导体材料设备ETF",
-          "role": "BASE · 半导体设备",
+          "role": "半导体设备底仓",
           "target_pct": 15,
           "current_pct": 3.325,
           "state": "已持有",
@@ -551,12 +551,12 @@
         {
           "item": "研究池",
           "status": "正常",
-          "detail": "持续跟踪141，开放观察35；09与11身份一致"
+          "detail": "持续跟踪141，开放观察35；两套核心清单一致"
         },
         {
           "item": "价格数据",
           "status": "待确认",
-          "detail": "9月28日行情只有24/40可证；因此暂停新增的价格驱动动作"
+          "detail": "9月28日行情只有24/40项目可确认，因此暂缓新增的价格驱动动作"
         },
         {
           "item": "宏观 / 政策",
