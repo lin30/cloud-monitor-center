@@ -1,14 +1,74 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
   "trade_permission": false,
+  "generated_at": "2026-09-29T14:03:00+08:00",
+  "source_as_of": "deployment_probe_only",
   "navigation": [
-    {"id": "overview", "label": "总览"},
-    {"id": "weekly", "label": "周报"},
-    {"id": "watchlist", "label": "关注标的"},
-    {"id": "opportunities", "label": "新机会"},
-    {"id": "industry", "label": "产业链"},
-    {"id": "robotics", "label": "机器人"},
-    {"id": "status", "label": "系统状态"}
+    {
+      "id": "overview",
+      "label": "总览"
+    },
+    {
+      "id": "weekly",
+      "label": "周报"
+    },
+    {
+      "id": "watchlist",
+      "label": "关注标的"
+    },
+    {
+      "id": "opportunities",
+      "label": "新机会"
+    },
+    {
+      "id": "industry",
+      "label": "产业链"
+    },
+    {
+      "id": "robotics",
+      "label": "机器人"
+    },
+    {
+      "id": "status",
+      "label": "系统状态"
+    }
   ],
-  "modules": {}
+  "modules": {
+    "overview": {
+      "items": [
+        {
+          "title": "发布链路验证",
+          "summary": "GitHub Pages 静态出口已接管。当前仅发布非敏感空壳，不含Actual持仓。"
+        }
+      ]
+    },
+    "weekly": {
+      "items": []
+    },
+    "watchlist": {
+      "items": []
+    },
+    "opportunities": {
+      "items": []
+    },
+    "industry": {
+      "items": []
+    },
+    "robotics": {
+      "items": []
+    },
+    "status": {
+      "items": [
+        {
+          "title": "部署状态",
+          "summary": "deployment_probe=true; trade_permission=false; NEW_content=0; Actual未公开"
+        }
+      ]
+    }
+  },
+  "audit": {
+    "deployment_probe": true,
+    "actual_portfolio_published": false,
+    "new_content": 0
+  }
 }
