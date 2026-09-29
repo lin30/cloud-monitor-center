@@ -5,7 +5,7 @@ const $=s=>document.querySelector(s);
 const esc=v=>String(v??"—").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const fmt=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):"—";
 const pct=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d)+"%":"—";
-const time=s=>{if(!s)return"—";try{return new Date(s).toLocaleString("zh-CN",{hour12:false})}catch{return s}};
+const time=s=>{if(!s)return"—";if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;try{return new Date(s).toLocaleString("zh-CN",{hour12:false})}catch{return s}};
 let PAYLOAD=null;
 let currentNav="总览";
 
