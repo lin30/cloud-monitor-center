@@ -2,7 +2,7 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-29T15:28:00+08:00",
+  "generated_at": "2026-09-29T15:42:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 研究用途",
   "source_as_of": {
@@ -51,7 +51,7 @@
         "holding_count": 5,
         "as_of": "2026-09-29T10:12:00+08:00",
         "max_core_seats": 7,
-        "core_seat_count": 5
+        "core_seat_count": "待重排"
       },
       "decision": {
         "tone": "warn",
@@ -734,7 +734,7 @@
         {
           "item": "统一Portfolio Allocator",
           "status": "待确认",
-          "detail": "前端已兼容动态预算与7席体系；正式业务合同/下一自然daily完成后再成为生产组合结论"
+          "detail": "活动合同v3.0与15/16兼容尾列已启用；前端已发布，下一自然08:00/15:30用于生产链自然验收。"
         },
         {
           "item": "研究池",
@@ -778,7 +778,9 @@
         "trade_permission": false,
         "NEW_content": 0,
         "ui_upgrade": "portfolio_allocator_v3_frontend_compat",
-        "application_scope": "robotics + edge_ai + platform_ai; read-only until formal daily"
+        "application_scope": "robotics + edge_ai + platform_ai; read-only until formal daily",
+        "active_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
+        "schema_tail": "15:+domain/seat/capital_rank/replacement_for;16:+domain/seat;17:unchanged"
       }
     }
   },
