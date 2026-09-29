@@ -1,8 +1,8 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
-  "ui_version": "light_dashboard_table_v2",
+  "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-29T15:04:00+08:00",
+  "generated_at": "2026-09-29T15:28:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 研究用途",
   "source_as_of": {
@@ -30,7 +30,7 @@
     },
     {
       "id": "industry",
-      "label": "产业链"
+      "label": "算力主线"
     },
     {
       "id": "robotics",
@@ -49,7 +49,9 @@
         "cash_pct": 76.3509,
         "invested_pct": 23.6491,
         "holding_count": 5,
-        "as_of": "2026-09-29T10:12:00+08:00"
+        "as_of": "2026-09-29T10:12:00+08:00",
+        "max_core_seats": 7,
+        "core_seat_count": 5
       },
       "decision": {
         "tone": "warn",
@@ -68,7 +70,10 @@
           "price_note": "Day0 10:12 / 非实时",
           "simulation_pnl": "0.00 万",
           "today_action": "不变",
-          "target_pct": 20
+          "target_pct": 20,
+          "domain": "INFRA",
+          "domain_label": "算力基础设施",
+          "portfolio_state": "保留"
         },
         {
           "ticker": "159516",
@@ -80,7 +85,10 @@
           "price_note": "Day0 10:12 / 非实时",
           "simulation_pnl": "0.00 万",
           "today_action": "不变",
-          "target_pct": 15
+          "target_pct": 15,
+          "domain": "INFRA",
+          "domain_label": "算力基础设施",
+          "portfolio_state": "保留"
         },
         {
           "ticker": "159326",
@@ -92,7 +100,10 @@
           "price_note": "Day0 10:12 / 非实时",
           "simulation_pnl": "0.00 万",
           "today_action": "不变",
-          "target_pct": null
+          "target_pct": null,
+          "domain": "INFRA",
+          "domain_label": "算力基础设施",
+          "portfolio_state": "观察 / 待重评"
         },
         {
           "ticker": "301150",
@@ -104,7 +115,10 @@
           "price_note": "Day0 10:12 / 非实时",
           "simulation_pnl": "0.00 万",
           "today_action": "不变",
-          "target_pct": null
+          "target_pct": null,
+          "domain": "INFRA",
+          "domain_label": "算力基础设施",
+          "portfolio_state": "被更强Alpha竞争"
         },
         {
           "ticker": "688700",
@@ -116,7 +130,10 @@
           "price_note": "Day0 10:12 / 非实时",
           "simulation_pnl": "0.00 万",
           "today_action": "不变",
-          "target_pct": null
+          "target_pct": null,
+          "domain": "INFRA",
+          "domain_label": "算力基础设施",
+          "portfolio_state": "与大族数控竞争"
         }
       ],
       "risk_family": [
@@ -202,10 +219,96 @@
         }
       ],
       "focus": [
-        "今天没有正式新增买卖动作，组合保持 Day0 状态。",
-        "当前真正需要解决的是价格数据完整性，而不是研究逻辑失效。",
-        "Actual 与 Target 已分开：大族数控、仕佳光子、天孚通信仍是目标，不是当前持仓。",
-        "东威科技已在 Actual 中，同时保留候补身份；页面只显示一份实际持仓。"
+        "当前正式daily仍是“今日无新增动作”；新席位体系不会把研究候选冒充成交。",
+        "算力基础设施当前仍是主攻方向，预算随产业兑现、业绩、市场和赔率动态调整，而不是固定50%。",
+        "光互联席位将在下一正式daily重新比较新易盛、中际旭创、天孚通信、仕佳光子。",
+        "机器人、端侧AI、腾讯等统一进入“算力应用”竞争，不建立独立小组合。",
+        "新机会优先替换现有较弱席位，核心风险持仓原则上最多7席。"
+      ],
+      "domain_budget": [
+        {
+          "domain": "INFRA",
+          "label": "算力基础设施",
+          "current_pct": 23.6491,
+          "budget_range": "45–60%",
+          "state": "主攻",
+          "note": "当前产业与业绩兑现领先；强兑现阶段可动态扩至60–65%，极强情形风险边界约70%。"
+        },
+        {
+          "domain": "APPLICATION",
+          "label": "算力应用",
+          "current_pct": 0,
+          "budget_range": "0–15%",
+          "state": "观察",
+          "note": "机器人、端侧AI、平台AI统一归入应用；不为配额强行买入。"
+        },
+        {
+          "domain": "CASH",
+          "label": "现金",
+          "current_pct": 76.3509,
+          "budget_range": "≥25%",
+          "state": "机动",
+          "note": "当前实际现金充足；等待正式daily给出可执行动作。"
+        }
+      ],
+      "actions": [],
+      "seats": [
+        {
+          "seat": "PCB_ALPHA",
+          "label": "PCB Alpha",
+          "leader": "生益电子",
+          "challengers": "—",
+          "state": "已持有",
+          "note": "现有核心席位。"
+        },
+        {
+          "seat": "PCB_CAPEX_ALPHA",
+          "label": "PCB设备 Alpha",
+          "leader": "大族数控",
+          "challengers": "东威科技",
+          "state": "待确认",
+          "note": "大族是旧Target，东威为Actual；下一正式daily决定是否替换。"
+        },
+        {
+          "seat": "OPTICAL_ALPHA",
+          "label": "光互联 Alpha",
+          "leader": "待重新竞争",
+          "challengers": "新易盛 / 中际旭创 / 天孚通信 / 仕佳光子",
+          "state": "待确认",
+          "note": "最新研究已变化，不沿用旧仕佳10%+天孚3%作为当前排序。"
+        },
+        {
+          "seat": "SEMICON_BASE",
+          "label": "半导体设备底仓",
+          "leader": "半导体材料设备ETF",
+          "challengers": "北方华创等",
+          "state": "已持有",
+          "note": "事件驱动检查ETF穿透，不每日全成分刷新。"
+        },
+        {
+          "seat": "APPLICATION_ALPHA_1",
+          "label": "应用 Alpha 1 · 机器人",
+          "leader": "雷赛智能",
+          "challengers": "绿的谐波 / 拓普集团 / 北特科技",
+          "state": "观察",
+          "note": "只读消费机器人研究；是否占席位由正式daily决定。"
+        },
+        {
+          "seat": "APPLICATION_ALPHA_2",
+          "label": "应用 Alpha 2 · 端侧/平台",
+          "leader": "瑞芯微",
+          "challengers": "腾讯 / 伯特利 / 乐鑫科技 / 恒玄科技",
+          "state": "观察",
+          "note": "低频观察，不新增专属监控任务；腾讯当前不走A股模型执行链。"
+        },
+        {
+          "seat": "FLEX_ALPHA",
+          "label": "机动 Alpha",
+          "leader": "空缺",
+          "challengers": "全市场高赔率新机会",
+          "state": "保留",
+          "note": "不为满仓而满仓。"
+        }
       ]
     },
     "weekly": {
@@ -419,103 +522,141 @@
           "sector": "PCB设备/耗材",
           "long_term": "核心",
           "current": "等待",
-          "reason": "价格/数据质量待确认"
+          "reason": "价格/数据质量待确认",
+          "domain": "算力基础设施"
         },
         {
           "sector": "国产半导体设备",
           "long_term": "核心",
           "current": "等待",
-          "reason": "数据质量 + 估值"
+          "reason": "数据质量 + 估值",
+          "domain": "算力基础设施"
         },
         {
           "sector": "电源/HVDC/电力/燃机",
           "long_term": "核心",
           "current": "风险",
-          "reason": "政策风险需要持续确认"
+          "reason": "政策风险需要持续确认",
+          "domain": "算力基础设施"
         },
         {
           "sector": "PCB板厂",
           "long_term": "核心",
           "current": "等待",
-          "reason": "数据质量待确认"
+          "reason": "数据质量待确认",
+          "domain": "算力基础设施"
         },
         {
           "sector": "光芯片/器件/CPO/OCS",
           "long_term": "积极",
           "current": "观察",
-          "reason": "产业趋势仍强，等待更好交易条件"
+          "reason": "产业趋势仍强，等待更好交易条件",
+          "domain": "算力基础设施"
         },
         {
           "sector": "高速光模块",
           "long_term": "积极",
           "current": "观察",
-          "reason": "政策 + 市场结构"
+          "reason": "政策 + 市场结构",
+          "domain": "算力基础设施"
         },
         {
           "sector": "光模块制造/测试设备",
           "long_term": "积极",
           "current": "观察",
-          "reason": "产业弹性较高"
+          "reason": "产业弹性较高",
+          "domain": "算力基础设施"
         },
         {
           "sector": "CCL/电子布/树脂/铜箔",
           "long_term": "积极",
           "current": "等待",
-          "reason": "等待量价进一步验证"
+          "reason": "等待量价进一步验证",
+          "domain": "算力基础设施"
         },
         {
           "sector": "国产GPU/ASIC",
           "long_term": "中性",
           "current": "观察",
-          "reason": "继续跟踪"
+          "reason": "继续跟踪",
+          "domain": "算力基础设施"
         },
         {
           "sector": "液冷",
           "long_term": "中性",
           "current": "观察",
-          "reason": "继续跟踪"
+          "reason": "继续跟踪",
+          "domain": "算力基础设施"
         },
         {
           "sector": "高速铜连接",
           "long_term": "中性",
           "current": "等待",
-          "reason": "等待更明确催化"
+          "reason": "等待更明确催化",
+          "domain": "算力基础设施"
         },
         {
           "sector": "HBM/先进封装/测试",
           "long_term": "中性",
           "current": "观察",
-          "reason": "继续跟踪"
+          "reason": "继续跟踪",
+          "domain": "算力基础设施"
         },
         {
           "sector": "企业级存储",
           "long_term": "中性",
           "current": "等待",
-          "reason": "等待更明确催化"
+          "reason": "等待更明确催化",
+          "domain": "算力基础设施"
         },
         {
           "sector": "光纤/光缆/材料",
           "long_term": "低优先",
           "current": "等待",
-          "reason": "当前优先级较低"
+          "reason": "当前优先级较低",
+          "domain": "算力基础设施"
         },
         {
           "sector": "国产服务器/超节点",
           "long_term": "低优先",
           "current": "观察",
-          "reason": "当前优先级较低"
+          "reason": "当前优先级较低",
+          "domain": "算力基础设施"
         },
         {
           "sector": "国产算力网络",
           "long_term": "低优先",
           "current": "观察",
-          "reason": "当前优先级较低"
+          "reason": "当前优先级较低",
+          "domain": "算力基础设施"
         },
         {
           "sector": "低纯度/二阶映射",
           "long_term": "低优先",
           "current": "等待",
-          "reason": "当前优先级较低"
+          "reason": "当前优先级较低",
+          "domain": "算力基础设施"
+        },
+        {
+          "domain": "算力应用",
+          "sector": "具身智能 / 机器人",
+          "long_term": "积极",
+          "current": "观察",
+          "reason": "产业进入量产验证阶段；雷赛智能等重点梯队参与Portfolio席位竞争。"
+        },
+        {
+          "domain": "算力应用",
+          "sector": "端侧AI",
+          "long_term": "积极",
+          "current": "观察",
+          "reason": "瑞芯微等进入低频重点观察，等待收入利润兑现与价格条件。"
+        },
+        {
+          "domain": "算力应用",
+          "sector": "平台AI",
+          "long_term": "积极",
+          "current": "观察",
+          "reason": "腾讯等关注AI商业化与Capex向利润转化；当前不通过A股模型链执行。"
         }
       ]
     },
@@ -544,10 +685,57 @@
           "value": "9/28 已完成",
           "note": "交易日日报已消费"
         }
+      ],
+      "rows": [
+        {
+          "tier": "核心",
+          "ticker": "002979",
+          "name": "雷赛智能",
+          "direction": "无框电机 / 关节模组 / 灵巧手",
+          "judgment": "规模供货证据已验证；市场偏弱且价格核验尚未闭环。",
+          "portfolio_state": "优先候选"
+        },
+        {
+          "tier": "核心",
+          "ticker": "688017",
+          "name": "绿的谐波",
+          "direction": "谐波减速器",
+          "judgment": "核心高弹性对象，继续等待新增订单与量产兑现。",
+          "portfolio_state": "席位竞争"
+        },
+        {
+          "tier": "核心",
+          "ticker": "601689",
+          "name": "拓普集团",
+          "direction": "执行器 / 结构件",
+          "judgment": "现有机器人底表核心对象，持续跟踪量产与收入贡献。",
+          "portfolio_state": "席位竞争"
+        },
+        {
+          "tier": "重点",
+          "ticker": "603009",
+          "name": "北特科技",
+          "direction": "丝杠 / 执行器",
+          "judgment": "高弹性对象，继续核验S阶段、订单交付和估值消化。",
+          "portfolio_state": "候补"
+        },
+        {
+          "tier": "扩展观察",
+          "ticker": "",
+          "name": "伯特利",
+          "direction": "智能底盘能力向机器人迁移",
+          "judgment": "用户指定扩展观察；当前机器人底表未见正式行，等待现有机器人链补证。",
+          "portfolio_state": "研究观察"
+        }
       ]
     },
     "status": {
       "rows": [
+        {
+          "item": "统一Portfolio Allocator",
+          "status": "待确认",
+          "detail": "前端已兼容动态预算与7席体系；正式业务合同/下一自然daily完成后再成为生产组合结论"
+        },
         {
           "item": "研究池",
           "status": "正常",
@@ -588,7 +776,9 @@
         "earnings_main": "partial; full-pool coverage_end not proven",
         "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-28|v1",
         "trade_permission": false,
-        "NEW_content": 0
+        "NEW_content": 0,
+        "ui_upgrade": "portfolio_allocator_v3_frontend_compat",
+        "application_scope": "robotics + edge_ai + platform_ai; read-only until formal daily"
       }
     }
   },
@@ -603,6 +793,8 @@
     "NEW_content": 0,
     "public_actual_portfolio_publish": true,
     "sensitive_account_fields_published": false,
-    "trade_permission": false
+    "trade_permission": false,
+    "portfolio_ui_v3": true,
+    "max_core_seats": 7
   }
 }
