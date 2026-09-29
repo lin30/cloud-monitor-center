@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Light · 云端监控中心</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到内容</a>
+  <div class="shell">
+    <header class="masthead">
+      <div><p class="eyebrow">LIGHT / CLOUD MONITOR</p><h1>云端监控中心<span class="brand-dot" aria-hidden="true">.</span></h1></div>
+      <p class="mode">研究展示 · 无交易操作</p>
+    </header>
+    <nav id="navigation" aria-label="一级导航"></nav>
+    <main id="main" tabindex="-1">
+      <div class="section-top"><div><p class="eyebrow">MONITORING DESK</p><h2 id="section-title">正在连接</h2></div><button id="refresh" type="button">刷新数据 ↻</button></div>
+      <p id="load-status" role="status" aria-live="polite">正在读取展示数据…</p>
+      <section id="content" aria-labelledby="section-title" aria-busy="true"></section>
+      <dl class="source-meta" aria-label="数据状态"><div><dt>数据版本</dt><dd id="schema">—</dd></div><div><dt>交易权限</dt><dd id="permission">等待确认</dd></div><div><dt>本次读取</dt><dd id="read-time">—</dd></div></dl>
+    </main>
+    <footer><span>Light · 独立展示空间</span><span>仅供研究观察</span></footer>
+  </div>
+</body>
+</html>

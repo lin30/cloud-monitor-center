@@ -1,0 +1,14 @@
+{
+  "schema_version": "cloud_monitor_dashboard.v1",
+  "trade_permission": false,
+  "navigation": [
+    {"id": "overview", "label": "总览"},
+    {"id": "weekly", "label": "周报"},
+    {"id": "watchlist", "label": "关注标的"},
+    {"id": "opportunities", "label": "新机会"},
+    {"id": "industry", "label": "产业链"},
+    {"id": "robotics", "label": "机器人"},
+    {"id": "status", "label": "系统状态"}
+  ],
+  "modules": {}
+}
