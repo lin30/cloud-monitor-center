@@ -2,7 +2,7 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_table_v2",
   "trade_permission": false,
-  "generated_at": "2026-09-29T15:01:00+08:00",
+  "generated_at": "2026-09-29T15:04:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 研究用途",
   "source_as_of": {
@@ -133,10 +133,10 @@
           "note": "159516实际模型权重"
         },
         {
-          "family": "HYBRID_OTHER",
-          "label": "HYBRID / 其他",
+          "family": "OTHER_WATCH",
+          "label": "其他观察仓",
           "weight_pct": 1.8468,
-          "note": "159326当前仅观察持有，不恢复正式电网BASE身份"
+          "note": "159326当前仅作为观察持仓，不恢复正式电网底仓身份"
         },
         {
           "family": "CASH",
@@ -231,7 +231,7 @@
         {
           "label": "业绩覆盖",
           "value": "部分覆盖",
-          "note": "全池coverage_end尚未证明完成"
+          "note": "全池覆盖截止仍未证明完成"
         }
       ],
       "note": "周报的模型状态截止9月26日，当时还是100万现金/0持仓；当前组合请以9月29日的Actual为准。"
