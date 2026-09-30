@@ -2,18 +2,18 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-30T10:08:00+08:00",
+  "generated_at": "2026-09-30T10:30:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 仅研究",
   "source_as_of": {
     "contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
-    "daily": "DAILY|2026-09-30|premarket|v1",
-    "daily_generated_at": "2026-09-30T10:08:00+08:00",
+    "daily": "DAILY|2026-09-30|premarket|v2_manual_pit",
+    "daily_generated_at": "2026-09-30T10:30:00+08:00",
     "actual_model_as_of": "2026-09-29T16:04:00+08:00",
     "last_complete_market_snapshot": "2026-09-28 recovered full 40/40; 2026-09-29 premarket selected scope durable 20/20",
-    "current_market_session": "2026-09-29 selected 20/20 durable for premarket; full 40 market-structure snapshot not reconstructed",
+    "current_market_session": "2026-09-29 selected 20/20 durable; manual PIT reconstruction uses no 2026-09-30 post-open market data",
     "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
-    "robot_formal_daily": "ROBOT_DAILY|2026-09-28|2300|v1"
+    "robot_formal_daily": "ROBOT_DAILY|2026-09-29|2300|v1"
   },
   "navigation": [
     {
@@ -62,32 +62,32 @@
           "domain": "INFRA",
           "label": "算力基础设施",
           "current_pct": 20.0735,
-          "budget_range": "45–60%",
-          "state": "主攻 · 恢复确认",
-          "note": "9月30日正式daily已恢复。该区间是v3风险预算基线，不要求买满；本次恢复不补造原08:00未持久化的具体动作。"
+          "budget_range": "35–45%",
+          "state": "选择性进攻",
+          "note": "产业与公司基本面仍最强，但沪深300/创业板均低于MA20/MA60；只给最强席位资本，不机械补满。"
         },
         {
           "domain": "APPLICATION",
           "label": "算力应用",
           "current_pct": 0,
-          "budget_range": "0–15%",
-          "state": "观察 · 竞争中",
-          "note": "机器人、端侧AI、平台AI继续竞争应用预算；本次恢复未确认新增正式席位。"
+          "budget_range": "0–5%",
+          "state": "观察",
+          "note": "机器人长期产业状态仍强，但市场修复仅第1日且价格执行核验有限；今天不授予正式应用席位。"
         },
         {
           "domain": "CASH",
           "label": "现金",
           "current_pct": 79.8857,
-          "budget_range": "常态尽量 ≥25%",
-          "state": "机动",
-          "note": "当前现金显著高于底线；正式恢复daily保持组合连续性，不为满仓而满仓。"
+          "budget_range": "50–65%",
+          "state": "高机动",
+          "note": "当前Actual现金仍高于战术目标；弱市场下允许继续高现金，后续优先给新易盛首仓或核心回撤加仓。"
         }
       ],
       "decision": {
         "tone": "good",
-        "title": "9月30日正式盘前已恢复，组合继续 NO_CHANGE",
-        "summary": "08:00研究和9月29日盘前所需20/20市场数据均已完成；原正式daily仅因持久化安全误拦未落表。现已按耐久证据恢复正式daily，不重跑研究，也不补造未持久化Action。",
-        "note": "当前Actual继续作为模拟盘真值；model_orders=0，15/16/17未被改写。9月29日全40只市场结构快照仍未重建，因此产业全市场结构仍按最近完整40/40基线解释。"
+        "title": "9月30日盘前判断已补做：新易盛拿到光互联目标席位",
+        "summary": "按9月29日收盘数据与盘前可得证据重建：市场仍弱，组合保持高现金；PCB双核心继续保留，新易盛在光互联竞争中胜出，中际旭创列第一挑战者。",
+        "note": "这是盘前时点重建，不使用9月30日开盘后行情，也不补造已经错过的开盘成交；Actual仍以现有持仓为准。"
       },
       "actual": [
         {
@@ -97,11 +97,11 @@
           "domain_label": "算力基础设施",
           "weight_pct": 8.6232,
           "role": "PCB核心进攻",
-          "portfolio_state": "保留；当前实际持仓",
+          "portfolio_state": "当前Actual核心；目标15%，弱市场下不追高",
           "simulation_cost": "107.79",
           "last_price": "107.79",
           "simulation_pnl": "0.00 万",
-          "target_pct": 20,
+          "target_pct": 15,
           "current_state": "持有"
         },
         {
@@ -111,11 +111,11 @@
           "domain_label": "算力基础设施",
           "weight_pct": 2.2996,
           "role": "PCB设备核心进攻",
-          "portfolio_state": "当前实际持仓；正式席位待下一daily确认",
+          "portfolio_state": "当前Actual核心；目标10%，趋势未稳前暂停新增",
           "simulation_cost": "229.96",
           "last_price": "229.96",
           "simulation_pnl": "0.00 万",
-          "target_pct": 20,
+          "target_pct": 10,
           "current_state": "持有"
         },
         {
@@ -124,12 +124,12 @@
           "domain": "INFRA",
           "domain_label": "算力基础设施",
           "weight_pct": 3.325,
-          "role": "半导体设备底仓",
-          "portfolio_state": "保留",
+          "role": "半导体设备小型底仓",
+          "portfolio_state": "保留小型legacy base；不再作为高权重基本仓",
           "simulation_cost": "0.665",
           "last_price": "0.665",
           "simulation_pnl": "0.00 万",
-          "target_pct": 15,
+          "target_pct": 5,
           "current_state": "持有"
         },
         {
@@ -139,7 +139,7 @@
           "domain_label": "算力基础设施",
           "weight_pct": 3.9816,
           "role": "PCB上游观察",
-          "portfolio_state": "当前持仓观察；与更强PCB席位竞争",
+          "portfolio_state": "无核心席位；下一可执行窗口优先退出/替换",
           "simulation_cost": "44.50",
           "last_price": "44.24",
           "simulation_pnl": "-0.0234 万",
@@ -153,12 +153,12 @@
           "domain_label": "算力基础设施",
           "weight_pct": 1.8441,
           "role": "PCB设备候补持仓",
-          "portfolio_state": "Actual持仓；与大族数控竞争设备席位",
+          "portfolio_state": "Actual候补；继续与大族数控竞争设备席位",
           "simulation_cost": "61.47",
           "last_price": "61.47",
           "simulation_pnl": "0.00 万",
           "target_pct": null,
-          "current_state": "持有"
+          "current_state": "观察"
         }
       ],
       "seats": [
@@ -168,55 +168,55 @@
           "leader": "生益电子",
           "challengers": "—",
           "state": "已占用",
-          "note": "当前Actual占用；本次正式恢复daily维持连续性。"
+          "note": "Actual已占用；当前Target 15%，基本面与现金流质量仍是组合核心之一。"
         },
         {
           "seat": "PCB_CAPEX_ALPHA",
           "label": "PCB设备席位",
           "leader": "大族数控",
           "challengers": "东威科技",
-          "state": "已占用 · 竞争中",
-          "note": "大族数控当前占用主席，东威科技为Actual候补/竞争持仓；本次不做替换。"
+          "state": "已占用 · 观察加仓",
+          "note": "大族数控保留主席，但经营现金流和下行趋势使新增资本暂缓。"
         },
         {
           "seat": "OPTICAL_ALPHA",
           "label": "光互联席位",
-          "leader": "待重新竞争",
-          "challengers": "中际旭创 / 新易盛 / 仕佳光子 / 天孚通信",
-          "state": "竞争中",
-          "note": "9月30日恢复daily未确认新占位，继续保持光互联内部竞争。"
+          "leader": "新易盛",
+          "challengers": "中际旭创 / 天孚通信 / 仕佳光子",
+          "state": "目标已确认 · 尚未持有",
+          "note": "新易盛凭C6量产、1.6T主力交付和更好的现金转换胜出；中际旭创为第一挑战者。"
         },
         {
           "seat": "SEMICON_BASE",
           "label": "半导体设备底仓席位",
           "leader": "半导体材料设备ETF",
-          "challengers": "北方华创等直接Alpha",
-          "state": "已占用",
-          "note": "当前Actual底仓继续保留；本次恢复无新增model order。"
+          "challengers": "直接设备Alpha",
+          "state": "小型保留",
+          "note": "Target降至5%，不再视为高权重基础仓；后续与直接设备个股竞争。"
         },
         {
           "seat": "APPLICATION_ALPHA_1",
           "label": "机器人应用席位",
           "leader": "空缺",
           "challengers": "雷赛智能 / 拓普集团 / 绿的谐波 / 北特科技",
-          "state": "待确认",
-          "note": "机器人底表只读参与资本竞争；尚无light正式daily席位。"
+          "state": "观察",
+          "note": "机器人产业状态强，但市场修复仅第1日，且最近日报价格执行核验受限；今天不占席。"
         },
         {
           "seat": "APPLICATION_ALPHA_2",
           "label": "端侧 / 平台应用席位",
           "leader": "空缺",
           "challengers": "瑞芯微 / 乐鑫科技 / 恒玄科技 / 腾讯",
-          "state": "待确认",
-          "note": "合同批准低频观察；没有正式daily身份前只作研究。"
+          "state": "观察",
+          "note": "继续低频研究，不为了配置均衡强行占席。"
         },
         {
           "seat": "FLEX_ALPHA",
           "label": "机动席位",
           "leader": "空缺",
-          "challengers": "全市场高赔率新机会",
+          "challengers": "罗博特科 / 联讯仪器 / 博众精工等",
           "state": "保留",
-          "note": "允许空缺，不为满仓而满仓。"
+          "note": "设备链证据强，但当前价格和市场环境不支持扩张持仓数量。"
         }
       ],
       "risk_family": [
@@ -240,11 +240,11 @@
         }
       ],
       "focus": [
-        "9月30日08:00盘前研究已完成并取得9月29日所需20/20耐久行情；正式daily的原始写入故障已完成确定性恢复。",
-        "模拟盘继续以Actual为真值；本次恢复不补造丢失的具体Action，model_orders=0，组合保持连续。",
-        "产业侧新增Bitdeer A201 21.7MW容量承购与GB300机架采购一级里程碑，但仍处投运前阶段，不直接映射为A股买入结论。",
-        "宏观与一级政策水位已推进至9月30日07:45；当前未出现需要覆盖组合的新增重大政策变化。",
-        "9月29日全40只市场结构快照仍未重建；盘前20/20已可用于正式决策，但产业全市场广度仍不冒充完整。"
+        "光互联竞争已完成：新易盛成为OPTICAL_ALPHA目标席位第一，中际旭创为第一挑战者；仕佳光子、天孚通信回到Replacement/观察。",
+        "市场状态仍偏弱：9月29日沪深300与创业板均低于MA20/MA60，因此INFRA风险预算压至35–45%，现金目标50–65%。",
+        "生益电子继续PCB_ALPHA，Target由旧20%压至15%；大族数控继续PCB_CAPEX_ALPHA，Target压至10%，趋势未稳前暂停新增。",
+        "半导体设备ETF仅保留5%小型legacy base；未来优先与直接设备Alpha比较，不再默认作为高权重基础仓。",
+        "机器人9月29日23:00正式日报已完成，但市场修复仅第1日且价格执行核验受限，因此APPLICATION今天仍不占正式席位。"
       ]
     },
     "weekly": {
@@ -282,8 +282,8 @@
           "name": "生益电子",
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
-          "target_pct": 20,
-          "next_trigger": "价格与基本面条件共同满足后再评估资本占用",
+          "target_pct": 15,
+          "next_trigger": "106–112区间且基本面不变时再评估小幅加仓；>114不追",
           "current_state": "持有"
         },
         {
@@ -291,17 +291,17 @@
           "name": "大族数控",
           "role": "PCB设备核心进攻",
           "current_pct": 2.2996,
-          "target_pct": 20,
-          "next_trigger": "当前实际持仓；下一正式daily确认设备席位与预算",
+          "target_pct": 10,
+          "next_trigger": "重回244–250确认承接，或225–232止跌后再评估",
           "current_state": "持有"
         },
         {
           "ticker": "159516",
           "name": "半导体设备ETF",
-          "role": "半导体设备底仓",
+          "role": "半导体设备小型底仓",
           "current_pct": 3.325,
-          "target_pct": 15,
-          "next_trigger": "下一正式daily确认底仓席位与预算",
+          "target_pct": 5,
+          "next_trigger": "重新站稳0.70附近且设备景气继续验证后再评估",
           "current_state": "持有"
         },
         {
@@ -310,7 +310,7 @@
           "role": "PCB上游观察",
           "current_pct": 3.9816,
           "target_pct": null,
-          "next_trigger": "继续验证HVLP/RTF兑现与相对Alpha",
+          "next_trigger": "无核心seat；下一可执行窗口优先退出/替换",
           "current_state": "观察"
         },
         {
@@ -319,92 +319,97 @@
           "role": "PCB设备候补持仓",
           "current_pct": 1.8441,
           "target_pct": null,
-          "next_trigger": "与大族数控比较订单兑现、相对Alpha与赔率",
-          "current_state": "持有"
+          "next_trigger": "继续与大族数控比较订单兑现与赔率，不新增",
+          "current_state": "观察"
         }
       ],
       "target": [
         {
           "ticker": "688183",
           "name": "生益电子",
-          "role": "核心进攻",
-          "target_pct": 20,
+          "role": "PCB核心",
+          "target_pct": 15,
           "current_pct": 8.6232,
           "state": "已持有",
-          "note": "旧Target兼容详情；待下一正式daily确认v3席位。"
+          "note": "弱市场下目标压至15%；不追高。"
         },
         {
           "ticker": "301200",
           "name": "大族数控",
-          "role": "核心进攻",
-          "target_pct": 20,
+          "role": "PCB设备核心",
+          "target_pct": 10,
           "current_pct": 2.2996,
           "state": "已持有",
-          "note": "当前实际持仓；旧20%只是上限，不代表必须补满。"
+          "note": "基本面强但现金流/趋势约束，暂停新增。"
         },
         {
-          "ticker": "688313",
-          "name": "仕佳光子",
-          "role": "NPO/CPO进攻",
-          "target_pct": 10,
+          "ticker": "300502",
+          "name": "新易盛",
+          "role": "光互联核心",
+          "target_pct": 8,
           "current_pct": 0,
           "state": "未持有",
-          "note": "旧Target兼容详情；光互联待重新竞争。"
-        },
-        {
-          "ticker": "300394",
-          "name": "天孚通信",
-          "role": "高质量观察",
-          "target_pct": 3,
-          "current_pct": 0,
-          "state": "未持有",
-          "note": "旧Target兼容详情；不等于当前排名。"
+          "note": "OPTICAL_ALPHA目标席位第一；下一可执行窗口再看380–400附近，不回填今日开盘成交。"
         },
         {
           "ticker": "159516",
           "name": "半导体设备ETF",
-          "role": "半导体设备底仓",
-          "target_pct": 15,
+          "role": "小型legacy底仓",
+          "target_pct": 5,
           "current_pct": 3.325,
           "state": "已持有",
-          "note": "旧Target兼容详情；下一daily确认。"
+          "note": "只保留小底仓，等待直接设备Alpha竞争。"
         }
       ],
       "replacement": [
         {
-          "ticker": "301511",
-          "name": "德福科技",
+          "ticker": "300308",
+          "name": "中际旭创",
           "state": "候补",
           "current_pct": 0,
-          "note": "上游材料弹性，等待现金流与量价进一步验证。"
+          "note": "光互联第一挑战者；增长更强但H1现金转换弱于新易盛。"
         },
         {
-          "ticker": "688097",
-          "name": "博众精工",
+          "ticker": "300394",
+          "name": "天孚通信",
           "state": "候补",
           "current_pct": 0,
-          "note": "光模块制造设备，已有下一代耦合订单证据；等待交付验收与重复订单。"
+          "note": "质量高，但增长/估值赔率暂不如新易盛。"
         },
         {
-          "ticker": "300757",
-          "name": "罗博特科",
+          "ticker": "688313",
+          "name": "仕佳光子",
           "state": "候补",
           "current_pct": 0,
-          "note": "保持候补观察，待下一正式研究更新。"
-        },
-        {
-          "ticker": "688808",
-          "name": "联讯仪器",
-          "state": "候补",
-          "current_pct": 0,
-          "note": "保持候补观察，待下一正式研究更新。"
+          "note": "弹性较高，但H1经营现金流显著为负，暂不占主席。"
         },
         {
           "ticker": "688700",
           "name": "东威科技",
           "state": "已持有",
           "current_pct": 1.8441,
-          "note": "同时属于候补竞争层；Actual身份优先。"
+          "note": "Actual候补；与大族数控竞争PCB设备席位。"
+        },
+        {
+          "ticker": "300757",
+          "name": "罗博特科",
+          "state": "候补",
+          "current_pct": 0,
+          "note": "CPO/OCS设备商业化证据强，等待更好赔率。"
+        },
+        {
+          "ticker": "688808",
+          "name": "联讯仪器",
+          "state": "候补",
+          "current_pct": 0,
+          "note": "1.6T测试兑现强，但价格/波动约束较大。"
+        },
+        {
+          "ticker": "688097",
+          "name": "博众精工",
+          "state": "候补",
+          "current_pct": 0,
+          "note": "NPO/CPO耦合设备已有订单，继续等交付与重复订单。"
         }
       ]
     },
@@ -454,9 +459,9 @@
           "ticker": "300502",
           "name": "新易盛",
           "theme": "高速光模块",
-          "state": "观察",
-          "reason": "持续跟踪对象；进入光互联席位重新竞争",
-          "next_step": "下一正式daily与中际旭创/天孚/仕佳统一比较"
+          "state": "目标席位",
+          "reason": "光互联重新竞争胜出，成为OPTICAL_ALPHA第一",
+          "next_step": "下一可执行窗口验证380–400附近赔率与止跌条件"
         },
         {
           "ticker": "002979",
@@ -490,15 +495,15 @@
           "domain": "算力基础设施",
           "sector": "PCB设备/耗材",
           "long_term": "核心",
-          "current": "等待",
-          "reason": "早盘交易条件未通过；午间数据已补齐，待下一正式daily重算"
+          "current": "观察加仓",
+          "reason": "大族数控基本面强，但趋势和现金流约束新增资本。"
         },
         {
           "domain": "算力基础设施",
           "sector": "国产半导体设备",
           "long_term": "核心",
-          "current": "等待",
-          "reason": "产业逻辑强，仍需结合估值与交易条件"
+          "current": "小仓持有",
+          "reason": "ETF仅保留小型legacy base，等待直接设备Alpha竞争。"
         },
         {
           "domain": "算力基础设施",
@@ -511,22 +516,22 @@
           "domain": "算力基础设施",
           "sector": "PCB板厂",
           "long_term": "核心",
-          "current": "等待",
-          "reason": "产业兑现较强，当前仍等待更完整交易条件"
+          "current": "选择性进攻",
+          "reason": "生益电子继续核心，但弱市场下不追高，只在回撤区间配置。"
         },
         {
           "domain": "算力基础设施",
           "sector": "光芯片/器件/CPO/OCS",
           "long_term": "积极",
           "current": "观察",
-          "reason": "产业趋势仍强，等待更好赔率与公司排序"
+          "reason": "天孚/仕佳退回候补，等待估值和现金流条件改善。"
         },
         {
           "domain": "算力基础设施",
           "sector": "高速光模块",
           "long_term": "积极",
-          "current": "观察",
-          "reason": "政策与市场结构共同影响当前节奏"
+          "current": "选择性进攻",
+          "reason": "新易盛赢得光互联目标席位；行业仍强，但市场弱势下只做单席位集中。"
         },
         {
           "domain": "算力基础设施",
@@ -610,7 +615,7 @@
           "sector": "具身智能 / 机器人",
           "long_term": "积极",
           "current": "观察",
-          "reason": "雷赛等已有硬证据，但市场节奏偏弱且尚未获得light正式席位"
+          "reason": "产业长期强，但市场修复仅第1日且价格核验有限，今天APPLICATION不占席。"
         },
         {
           "domain": "算力应用",
@@ -707,12 +712,12 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "9月30日正式daily已恢复；Actual继续作为模拟盘真值，本次恢复无新增model order。"
+          "detail": "9月30日PIT盘前判断已补做并成为current：4个Target席位，光互联由新易盛领先；Actual仍保持现有5个持仓。"
         },
         {
           "item": "价格 / 市场数据",
           "status": "部分覆盖",
-          "detail": "9月30日盘前所需的9月29日市场数据已取得20/20耐久结果；全40只市场结构快照仍未重建，最近完整全量基线仍为9月28日40/40。"
+          "detail": "9月30日盘前重建使用9月29日20/20耐久样本；未使用9月30日开盘后行情。全40只市场结构仍沿用9月28日完整基线。"
         },
         {
           "item": "产业扫描",
@@ -732,37 +737,37 @@
         {
           "item": "机器人链",
           "status": "部分覆盖",
-          "detail": "9月29日产线扫描完成且39/40范围正常；本次同步未找到9月29日23:00正式日报回执，页面沿用最近已确认日报。"
+          "detail": "9月29日21:30 producer完成，23:00正式日报也已完成；39/40 clean，单票partial局部隔离。"
         },
         {
           "item": "页面发布",
           "status": "更新中",
-          "detail": "正在发布9月30日正式daily恢复后的公开投影；仅更新light独立GitHub Pages。"
+          "detail": "已生成9月30日PIT判断公开投影并提交至light独立GitHub Pages仓库。"
         }
       ],
       "technical": {
         "active_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
         "schema_revision": "SCHEMA|2026-09-27|cloud_light_integrated_v2_2",
-        "daily_id": "DAILY|2026-09-30|premarket|v1",
+        "daily_id": "DAILY|2026-09-30|premarket|v2_manual_pit",
         "daily_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
         "daily_v3_fields_present": true,
-        "domain_budget_source": "formal_daily_recovery",
-        "portfolio_seats_source": "formal_daily_recovery",
+        "domain_budget_source": "manual_pit_formal_daily",
+        "portfolio_seats_source": "PORTBOOK|2026-09-30|manual_pit_v1",
         "application_watch_source": "active_contract_low_frequency_watchlist",
-        "price_gate": "PREMARKET_SELECTED_SCOPE_DURABLE_20_OF_20; FULL_40_MARKET_STRUCTURE_PENDING",
+        "price_gate": "PIT_RECONSTRUCTION_NO_POST_OPEN_DATA_NO_RETRO_EXECUTION",
         "market_at_decision": "2026-09-29 selected 20/20 durable",
         "market_post_decision_recovery": "not_applicable",
         "macro_deep": "verified through 2026-09-29T12:33:58+08:00",
         "policy_projection": "latest durable 05 at 15:33; 92 projection pending recovery",
         "earnings_main": "partial; full-pool coverage_end not proven",
         "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
-        "robot_daily": "ROBOT_DAILY|2026-09-28|2300|v1",
+        "robot_daily": "ROBOT_DAILY|2026-09-29|2300|v1",
         "trade_permission": false,
         "NEW_content": 0,
         "market_current_session": "2026-09-29 selected 20/20 durable; full 40 structure pending",
         "market_last_complete": "2026-09-28 full 40/40",
         "public_projection_policy": "simulation_only_allowlist_no_execution_ledger",
-        "premarket_publish": "verified_recovery_published_non_natural at 2026-09-30T10:08:00+08:00"
+        "premarket_publish": "verified_manual_pit_no_retro_execution at 2026-09-30T10:30:00+08:00"
       }
     }
   },
