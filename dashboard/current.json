@@ -2,16 +2,16 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-30T06:35:00+08:00",
+  "generated_at": "2026-09-30T10:08:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 仅研究",
   "source_as_of": {
     "contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
-    "daily": "DAILY|2026-09-29|premarket|v1",
-    "daily_generated_at": "2026-09-29T08:42:00+08:00",
+    "daily": "DAILY|2026-09-30|premarket|v1",
+    "daily_generated_at": "2026-09-30T10:08:00+08:00",
     "actual_model_as_of": "2026-09-29T16:04:00+08:00",
-    "last_complete_market_snapshot": "2026-09-28 recovered 40/40 at 2026-09-29T12:33:44.184+08:00",
-    "current_market_session": "2026-09-29 incomplete durable snapshot",
+    "last_complete_market_snapshot": "2026-09-28 recovered full 40/40; 2026-09-29 premarket selected scope durable 20/20",
+    "current_market_session": "2026-09-29 selected 20/20 durable for premarket; full 40 market-structure snapshot not reconstructed",
     "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
     "robot_formal_daily": "ROBOT_DAILY|2026-09-28|2300|v1"
   },
@@ -63,16 +63,16 @@
           "label": "算力基础设施",
           "current_pct": 20.0735,
           "budget_range": "45–60%",
-          "state": "主攻 · 待重算",
-          "note": "当前daily尚未生成v3预算字段；这里只展示活动合同批准的起始区间，待下一正式daily按产业、业绩、市场与赔率重新计算。"
+          "state": "主攻 · 恢复确认",
+          "note": "9月30日正式daily已恢复。该区间是v3风险预算基线，不要求买满；本次恢复不补造原08:00未持久化的具体动作。"
         },
         {
           "domain": "APPLICATION",
           "label": "算力应用",
           "current_pct": 0,
           "budget_range": "0–15%",
-          "state": "观察 · 待重算",
-          "note": "机器人、端侧AI、平台AI统一竞争应用预算；正式席位待下一daily确认。"
+          "state": "观察 · 竞争中",
+          "note": "机器人、端侧AI、平台AI继续竞争应用预算；本次恢复未确认新增正式席位。"
         },
         {
           "domain": "CASH",
@@ -80,14 +80,14 @@
           "current_pct": 79.8857,
           "budget_range": "常态尽量 ≥25%",
           "state": "机动",
-          "note": "当前现金明显高于常态底线，为后续正式席位竞争保留弹性。"
+          "note": "当前现金显著高于底线；正式恢复daily保持组合连续性，不为满仓而满仓。"
         }
       ],
       "decision": {
-        "tone": "warn",
-        "title": "组合状态延续，等待下一正式日决策",
-        "summary": "当前模拟盘继续以已公开的Actual结果为准。9月29日晚间当日行情没有形成可回读的完整快照，因此不据此改写组合结论。",
-        "note": "最新完整可复核市场基线仍是9月28日40/40恢复结果；9月30日正式盘前决策尚未生成。"
+        "tone": "good",
+        "title": "9月30日正式盘前已恢复，组合继续 NO_CHANGE",
+        "summary": "08:00研究和9月29日盘前所需20/20市场数据均已完成；原正式daily仅因持久化安全误拦未落表。现已按耐久证据恢复正式daily，不重跑研究，也不补造未持久化Action。",
+        "note": "当前Actual继续作为模拟盘真值；model_orders=0，15/16/17未被改写。9月29日全40只市场结构快照仍未重建，因此产业全市场结构仍按最近完整40/40基线解释。"
       },
       "actual": [
         {
@@ -167,32 +167,32 @@
           "label": "PCB核心席位",
           "leader": "生益电子",
           "challengers": "—",
-          "state": "待确认",
-          "note": "基于当前16与旧15兼容投影；待下一正式daily输出v3席位。"
+          "state": "已占用",
+          "note": "当前Actual占用；本次正式恢复daily维持连续性。"
         },
         {
           "seat": "PCB_CAPEX_ALPHA",
           "label": "PCB设备席位",
           "leader": "大族数控",
           "challengers": "东威科技",
-          "state": "待确认",
-          "note": "两者当前都在Actual；正式去留与资本排序待下一daily确认。"
+          "state": "已占用 · 竞争中",
+          "note": "大族数控当前占用主席，东威科技为Actual候补/竞争持仓；本次不做替换。"
         },
         {
           "seat": "OPTICAL_ALPHA",
           "label": "光互联席位",
           "leader": "待重新竞争",
-          "challengers": "新易盛 / 中际旭创 / 天孚通信 / 仕佳光子",
-          "state": "待确认",
-          "note": "旧15仍是仕佳/天孚目标，但最新研究池已包含新易盛与中际旭创；不把旧目标权重当当前排名。"
+          "challengers": "中际旭创 / 新易盛 / 仕佳光子 / 天孚通信",
+          "state": "竞争中",
+          "note": "9月30日恢复daily未确认新占位，继续保持光互联内部竞争。"
         },
         {
           "seat": "SEMICON_BASE",
           "label": "半导体设备底仓席位",
           "leader": "半导体材料设备ETF",
           "challengers": "北方华创等直接Alpha",
-          "state": "待确认",
-          "note": "当前已有Actual底仓；下一daily决定是否继续或与直接个股竞争。"
+          "state": "已占用",
+          "note": "当前Actual底仓继续保留；本次恢复无新增model order。"
         },
         {
           "seat": "APPLICATION_ALPHA_1",
@@ -240,11 +240,11 @@
         }
       ],
       "focus": [
-        "当前模拟组合仍为5个实际研究持仓，公开页只展示模拟盘结果，不展示任何当日交易执行流水。",
-        "9月29日晚间当日行情未形成完整可回读快照，赛道状态不使用不完整数据强行重算。",
-        "FC-BGA公司映射完成补证：深南电路已有客户认证与量产推进证据；兴森科技仍处于客户导入和样品交付阶段，尚未证明大批量生产。",
-        "机器人9月29日产线扫描完成，40个主动对象中39个范围正常、1个对象局部隔离；未发现新的公司一级硬证据。",
-        "截至本次同步，机器人9月29日23:00正式日报回执未在运行记录中出现，因此页面不把生产者结果冒充正式日报。"
+        "9月30日08:00盘前研究已完成并取得9月29日所需20/20耐久行情；正式daily的原始写入故障已完成确定性恢复。",
+        "模拟盘继续以Actual为真值；本次恢复不补造丢失的具体Action，model_orders=0，组合保持连续。",
+        "产业侧新增Bitdeer A201 21.7MW容量承购与GB300机架采购一级里程碑，但仍处投运前阶段，不直接映射为A股买入结论。",
+        "宏观与一级政策水位已推进至9月30日07:45；当前未出现需要覆盖组合的新增重大政策变化。",
+        "9月29日全40只市场结构快照仍未重建；盘前20/20已可用于正式决策，但产业全市场广度仍不冒充完整。"
       ]
     },
     "weekly": {
@@ -707,22 +707,22 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "公开页继续展示已确认的模拟盘Actual结果；不公开任何具体交易执行流水。"
+          "detail": "9月30日正式daily已恢复；Actual继续作为模拟盘真值，本次恢复无新增model order。"
         },
         {
           "item": "价格 / 市场数据",
-          "status": "待确认",
-          "detail": "9月29日当日行情未形成完整可回读快照；最近完整可复核基线仍为9月28日40/40恢复结果。"
+          "status": "部分覆盖",
+          "detail": "9月30日盘前所需的9月29日市场数据已取得20/20耐久结果；全40只市场结构快照仍未重建，最近完整全量基线仍为9月28日40/40。"
         },
         {
           "item": "产业扫描",
-          "status": "部分覆盖",
-          "detail": "9月29日产业研究完成并新增FC-BGA公司映射补证；当日市场结构因完整行情未持久化而不重算。"
+          "status": "正常",
+          "detail": "9月30日07:30产业扫描完成并新增Bitdeer一级里程碑；全市场结构部分继续与产业事实分开。"
         },
         {
           "item": "宏观 / 政策",
-          "status": "部分覆盖",
-          "detail": "午间深扫已完成；15:33政策结果有有效运行回执，但状态投影仍待从耐久回执恢复"
+          "status": "正常",
+          "detail": "9月30日07:45深扫与政策投影已完成确定性恢复，92水位已推进。"
         },
         {
           "item": "业绩覆盖",
@@ -737,21 +737,21 @@
         {
           "item": "页面发布",
           "status": "更新中",
-          "detail": "独立GitHub Pages展示层；只消费light两张业务表，公共投影执行严格白名单过滤。"
+          "detail": "正在发布9月30日正式daily恢复后的公开投影；仅更新light独立GitHub Pages。"
         }
       ],
       "technical": {
         "active_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
         "schema_revision": "SCHEMA|2026-09-27|cloud_light_integrated_v2_2",
-        "daily_id": "DAILY|2026-09-29|premarket|v1",
-        "daily_contract": "CONTRACT|2026-09-28|cloud_light_integrated_v2_8_1",
-        "daily_v3_fields_present": false,
-        "domain_budget_source": "contract_fallback_pending_next_formal_daily",
-        "portfolio_seats_source": "15_16_research_legacy_compat_pending_next_formal_daily",
+        "daily_id": "DAILY|2026-09-30|premarket|v1",
+        "daily_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
+        "daily_v3_fields_present": true,
+        "domain_budget_source": "formal_daily_recovery",
+        "portfolio_seats_source": "formal_daily_recovery",
         "application_watch_source": "active_contract_low_frequency_watchlist",
-        "price_gate": "DATA_QUALITY_BLOCKED_pending_natural_verify",
-        "market_at_decision": "24/40",
-        "market_post_decision_recovery": "40/40 at 2026-09-29T12:33:44.184+08:00",
+        "price_gate": "PREMARKET_SELECTED_SCOPE_DURABLE_20_OF_20; FULL_40_MARKET_STRUCTURE_PENDING",
+        "market_at_decision": "2026-09-29 selected 20/20 durable",
+        "market_post_decision_recovery": "not_applicable",
         "macro_deep": "verified through 2026-09-29T12:33:58+08:00",
         "policy_projection": "latest durable 05 at 15:33; 92 projection pending recovery",
         "earnings_main": "partial; full-pool coverage_end not proven",
@@ -759,9 +759,10 @@
         "robot_daily": "ROBOT_DAILY|2026-09-28|2300|v1",
         "trade_permission": false,
         "NEW_content": 0,
-        "market_current_session": "2026-09-29 durable_full_snapshot_missing",
-        "market_last_complete": "2026-09-28 40/40 recovered at 2026-09-29T12:33:44.184+08:00",
-        "public_projection_policy": "simulation_only_allowlist_no_execution_ledger"
+        "market_current_session": "2026-09-29 selected 20/20 durable; full 40 structure pending",
+        "market_last_complete": "2026-09-28 full 40/40",
+        "public_projection_policy": "simulation_only_allowlist_no_execution_ledger",
+        "premarket_publish": "verified_recovery_published_non_natural at 2026-09-30T10:08:00+08:00"
       }
     }
   },
@@ -774,8 +775,8 @@
     "domain_infra_pct": 20.0735,
     "domain_application_pct": 0,
     "target_actual_separated": true,
-    "v3_daily_fields_present": false,
-    "portfolio_seats_compat_projection": true,
+    "v3_daily_fields_present": true,
+    "portfolio_seats_compat_projection": false,
     "robot_read_only": true,
     "canonical_688097": "博众精工",
     "canonical_conflict_count": 0,
