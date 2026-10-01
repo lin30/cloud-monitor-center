@@ -1,5 +1,21 @@
 'use strict';
 
+function publicProjection(value) {
+  const privateKey = /^(actions|action|today_action|pending_action|funding_source|execution_source|execution_time|trade_time|trade_price|trade_shares|current_shares|shares|quantity|fills|transactions|model_orders|entry_zone|add_zone|chase_cap|execution_plan)$/i;
+  const executionText = /买入|卖出|加仓|减仓|清仓|首仓|首买|建仓|补仓|止损|追高|不追|成交|持仓调整|提高资本占用|下一可执行窗口|退出\/替换|回撤.{0,12}配置|今日资金动作|今日动作|资金来源|执行来源|\b(?:BUY|SELL)\b/i;
+  if (typeof value === 'string') {
+    return executionText.test(value) ? '复核经营兑现、估值与研究状态。' : value;
+  }
+  if (Array.isArray(value)) return value.map(publicProjection);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key]) => !privateKey.test(key))
+      .map(([key, item]) => [key, publicProjection(item)]));
+  }
+  return value;
+}
+
+
 const NAV=["总览","周报","关注标的","新机会","算力主线","机器人","系统状态"];
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??"—").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
@@ -38,6 +54,7 @@ function roleBadge(s){
 }
 
 function overview(p){
+  p=publicProjection(p);
   const o=p.modules.overview;
   const budgetRows=(o.domain_budget||[]).map(x=>({
     search:[x.domain,x.label,x.state].join(" "),
@@ -85,6 +102,7 @@ function overview(p){
 }
 
 function weekly(p){
+  p=publicProjection(p);
   const w=p.modules.weekly;
   const metrics=(w.metrics||[]).map(x=>({search:x.label,cells:[esc(x.label),'<strong>'+esc(x.value)+'</strong>',esc(x.note||"")]}));
   return '<div class="grid">'+
@@ -95,6 +113,7 @@ function weekly(p){
 }
 
 function watchlist(p){
+  p=publicProjection(p);
   const w=p.modules.watchlist;
   const actual=(w.actual||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
@@ -116,6 +135,7 @@ function watchlist(p){
 }
 
 function opportunities(p){
+  p=publicProjection(p);
   const rows=(p.modules.opportunities.rows||[]).map(x=>({
     search:[x.ticker,x.name,x.theme].join(" "),
     cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',esc(x.theme||"—"),statusBadge(x.state),esc(x.reason||""),esc(x.next_step||"")]
@@ -124,6 +144,7 @@ function opportunities(p){
 }
 
 function industry(p){
+  p=publicProjection(p);
   const rows=(p.modules.industry.rows||[]).map(x=>({
     search:[x.domain,x.sector,x.long_term,x.current].join(" "),
     cells:[esc(x.domain||"—"),'<strong>'+esc(x.sector)+'</strong>',badge(x.long_term,x.long_term==="核心"?"strong":x.long_term==="积极"?"good":"muted"),badge(x.current,x.current==="进攻"?"good":x.current==="风险"?"warn":"info"),esc(x.reason||"")]
@@ -134,6 +155,7 @@ function industry(p){
 }
 
 function robotics(p){
+  p=publicProjection(p);
   const r=p.modules.robotics;
   const rows=(r.rows||[]).map(x=>({
     search:[x.name,x.ticker,x.tier,x.direction,x.portfolio_state].join(" "),
@@ -148,6 +170,7 @@ function robotics(p){
 }
 
 function systemStatus(p){
+  p=publicProjection(p);
   const s=p.modules.status;
   const rows=(s.rows||[]).map(x=>({
     search:[x.item,x.status,x.detail].join(" "),
@@ -194,7 +217,7 @@ async function boot(){
   try{
     const res=await fetch("./dashboard/current.json?ts="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const p=await res.json();
+    const p=publicProjection(await res.json());
     const errs=validate(p); if(errs.length){fail(errs);return}
     PAYLOAD=p;
     $("#snapshotMeta").textContent="数据更新 "+time(p.generated_at)+" · "+esc(p.notice||"模拟盘");
@@ -204,3 +227,4 @@ async function boot(){
   }catch(e){fail(["无法读取最新数据："+e.message])}
 }
 boot();
+
