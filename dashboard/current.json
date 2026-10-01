@@ -80,14 +80,14 @@
           "current_pct": 79.8857,
           "budget_range": "50–65%",
           "state": "高机动",
-          "note": "当前Actual现金仍高于战术目标；弱市场下允许继续高现金，后续优先给新易盛首仓或核心回撤加仓。"
+          "note": "当前Actual现金仍高于战术目标；弱市场下允许继续高现金，后续优先给新易盛首仓或核心回撤提高资本占用。"
         }
       ],
       "decision": {
         "tone": "good",
         "title": "9月30日盘前判断已补做：新易盛拿到光互联目标席位",
         "summary": "按9月29日收盘数据与盘前可得证据重建：市场仍弱，组合保持高现金；PCB双核心继续保留，新易盛在光互联竞争中胜出，中际旭创列第一挑战者。",
-        "note": "这是盘前时点重建，不使用9月30日开盘后行情，也不补造已经错过的开盘成交；Actual仍以现有持仓为准。"
+        "note": "这是盘前时点重建，不使用9月30日开盘后行情，也不补造已经错过的开盘执行；Actual仍以现有持仓为准。"
       },
       "actual": [
         {
@@ -175,7 +175,7 @@
           "label": "PCB设备席位",
           "leader": "大族数控",
           "challengers": "东威科技",
-          "state": "已占用 · 观察加仓",
+          "state": "已占用 · 观察",
           "note": "大族数控保留主席，但经营现金流和下行趋势使新增资本暂缓。"
         },
         {
@@ -283,7 +283,7 @@
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
           "target_pct": 15,
-          "next_trigger": "106–112区间且基本面不变时再评估小幅加仓；>114不追",
+          "next_trigger": "106–112区间且基本面不变时再评估提高资本占用；>114不追",
           "current_state": "持有"
         },
         {
@@ -349,7 +349,7 @@
           "target_pct": 8,
           "current_pct": 0,
           "state": "未持有",
-          "note": "OPTICAL_ALPHA目标席位第一；下一可执行窗口再看380–400附近，不回填今日开盘成交。"
+          "note": "OPTICAL_ALPHA目标席位第一；下一可执行窗口再看380–400附近，不回填当日开盘执行。"
         },
         {
           "ticker": "159516",
@@ -485,7 +485,7 @@
           "theme": "平台AI",
           "state": "观察",
           "reason": "活动合同批准的平台AI低频观察对象；现有A股模型不支持其市场执行",
-          "next_step": "保持研究观察，不进入现有A股模型成交链"
+          "next_step": "保持研究观察，不进入现有A股模型执行链"
         }
       ]
     },
@@ -495,7 +495,7 @@
           "domain": "算力基础设施",
           "sector": "PCB设备/耗材",
           "long_term": "核心",
-          "current": "观察加仓",
+          "current": "观察",
           "reason": "大族数控基本面强，但趋势和现金流约束新增资本。"
         },
         {
@@ -629,7 +629,7 @@
           "sector": "平台AI",
           "long_term": "中性",
           "current": "观察",
-          "reason": "腾讯进入低频平台AI研究；现有A股模型不支持其市场成交"
+          "reason": "腾讯进入低频平台AI研究；现有A股模型不支持其市场执行"
         }
       ]
     },
@@ -790,6 +790,7 @@
     "sensitive_account_fields_published": false,
     "trade_permission": false,
     "public_projection_allowlist": true,
-    "execution_ledger_fields_published": false
+    "execution_ledger_fields_published": false,
+    "public_text_sanitized": true
   }
 }
