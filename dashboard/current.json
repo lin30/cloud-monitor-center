@@ -2,7 +2,7 @@
   "schema_version": "cloud_monitor_dashboard.v1",
   "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
-  "generated_at": "2026-09-30T10:30:00+08:00",
+  "generated_at": "2026-10-01T16:15:00+08:00",
   "snapshot_commit": null,
   "notice": "模拟盘 / 仅研究",
   "source_as_of": {
@@ -10,10 +10,11 @@
     "daily": "DAILY|2026-09-30|premarket|v2_manual_pit",
     "daily_generated_at": "2026-09-30T10:30:00+08:00",
     "actual_model_as_of": "2026-09-29T16:04:00+08:00",
-    "last_complete_market_snapshot": "2026-09-28 recovered full 40/40; 2026-09-29 premarket selected scope durable 20/20",
-    "current_market_session": "2026-09-29 selected 20/20 durable; manual PIT reconstruction uses no 2026-09-30 post-open market data",
-    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
-    "robot_formal_daily": "ROBOT_DAILY|2026-09-29|2300|v1"
+    "last_complete_market_snapshot": "2026-09-30 full 40/40 verified at 2026-09-30T21:46:30+08:00",
+    "current_market_session": "2026-10-01 A-share non-trading day; reuse 2026-09-30 verified 40/40 snapshot",
+    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-30|v1",
+    "robot_formal_daily": "ROBOT_DAILY|2026-09-30|2300|v1",
+    "macro_deep": "2026-10-01T07:44:13+08:00"
   },
   "navigation": [
     {
@@ -84,10 +85,10 @@
         }
       ],
       "decision": {
-        "tone": "good",
-        "title": "9月30日盘前判断已补做：新易盛拿到光互联目标席位",
-        "summary": "按9月29日收盘数据与盘前可得证据重建：市场仍弱，组合保持高现金；PCB双核心继续保留，新易盛在光互联竞争中胜出，中际旭创列第一挑战者。",
-        "note": "这是盘前时点重建，不使用9月30日开盘后行情，也不补造已经错过的开盘执行；Actual仍以现有持仓为准。"
+        "tone": "warn",
+        "title": "10月1日休市，组合判断沿用9月30日正式版本",
+        "summary": "A股今日无新交易时段，Actual保持不变。最近完整市场基线已更新为9月30日40/40；弱市场结构仍支持高现金与少量核心席位的组合框架。",
+        "note": "光互联目标席位仍由新易盛领先；10月1日新增宏观与产业信息只进入研究更新，不改写休市日组合。"
       },
       "actual": [
         {
@@ -240,11 +241,11 @@
         }
       ],
       "focus": [
-        "光互联竞争已完成：新易盛成为OPTICAL_ALPHA目标席位第一，中际旭创为第一挑战者；仕佳光子、天孚通信回到Replacement/观察。",
-        "市场状态仍偏弱：9月29日沪深300与创业板均低于MA20/MA60，因此INFRA风险预算压至35–45%，现金目标50–65%。",
-        "生益电子继续PCB_ALPHA，Target由旧20%压至15%；大族数控继续PCB_CAPEX_ALPHA，Target压至10%，趋势未稳前暂停新增。",
-        "半导体设备ETF仅保留5%小型legacy base；未来优先与直接设备Alpha比较，不再默认作为高权重基础仓。",
-        "机器人9月29日23:00正式日报已完成，但市场修复仅第1日且价格执行核验受限，因此APPLICATION今天仍不占正式席位。"
+        "9月30日市场结构已完成40/40核验；10月1日休市，仅复用该完整快照，不制造新的日线判断。",
+        "光互联席位继续由新易盛领先，中际旭创为第一挑战者；Actual当前持仓结构没有变化。",
+        "Helios相关公司映射补证已完成，目前没有证据证明A股公司直接参与该项目，不做公司级升级。",
+        "10月1日宏观深扫新增美国通胀、AI债务风险、定制芯片IP合作与智能体AI监管四项信息；强制政策源没有发现新的算力硬件限制。",
+        "机器人9月30日正式日报已完成：产业状态仍强、市场状态仍弱，light组合层继续把机器人标的放在竞争观察区。"
       ]
     },
     "weekly": {
@@ -531,14 +532,14 @@
           "sector": "高速光模块",
           "long_term": "积极",
           "current": "选择性进攻",
-          "reason": "新易盛赢得光互联目标席位；行业仍强，但市场弱势下只做单席位集中。"
+          "reason": "9月30日完整市场快照确认整体环境仍弱；新易盛继续占据光互联目标席位，保持单席位集中。"
         },
         {
           "domain": "算力基础设施",
           "sector": "光模块制造/测试设备",
           "long_term": "积极",
           "current": "观察",
-          "reason": "设备弹性较高，博众精工等仍在验证交付与重复订单"
+          "reason": "Helios首单属于产业里程碑，但A股精确公司映射未获一级证据确认；设备链继续等待订单与交付验证。"
         },
         {
           "domain": "算力基础设施",
@@ -573,7 +574,7 @@
           "sector": "HBM/先进封装/测试",
           "long_term": "中性",
           "current": "观察",
-          "reason": "9月29日补证显示深南电路已有FC-BGA客户认证与量产推进，兴森科技仍在客户导入和样品阶段；继续等待订单、收入与规模量产验证。"
+          "reason": "FC-BGA既有公司证据继续有效；新增HBM线索仍缺一级原件，暂不提高公司或组合身份。"
         },
         {
           "domain": "算力基础设施",
@@ -615,7 +616,7 @@
           "sector": "具身智能 / 机器人",
           "long_term": "积极",
           "current": "观察",
-          "reason": "产业长期强，但市场修复仅第1日且价格核验有限，今天APPLICATION不占席。"
+          "reason": "机器人产业状态仍强，但9月30日市场状态仍弱；正式日报仅保留单一研究席位，light组合继续观察。"
         },
         {
           "domain": "算力应用",
@@ -635,15 +636,15 @@
     },
     "robotics": {
       "tone": "warn",
-      "title": "产业跟踪继续有效，正式日报仍以9月28日为最近已确认版本",
-      "summary": "9月29日机器人产业扫描已完成：40个主动对象中39个范围正常、1个对象局部隔离，没有新增公司一级硬证据。由于本次同步未找到9月29日23:00正式日报回执，重点梯队沿用已验证研究状态，不升级为新的组合身份。",
+      "title": "产业状态仍强，市场状态仍弱；9月30日正式日报已完成",
+      "summary": "9月30日机器人生产与正式日报均完成：40个主动对象中39个范围正常、1个对象局部隔离；没有新增公司一级硬证据。正式日报在弱市场下只保留1个研究席位，light组合层仍不把机器人观察对象冒充Actual持仓。",
       "rows": [
         {
           "tier": "核心",
           "ticker": "002979",
           "name": "雷赛智能",
           "direction": "无框电机 / 关节模组 / 灵巧手 / 驱动",
-          "judgment": "已有量化订单和规模供货一级证据；当前日报仍保留核心研究，价格执行待核验",
+          "judgment": "长期一级证据继续有效；9月30日正式日报仍将其作为核心研究对象，市场偏弱下保持谨慎。",
           "portfolio_state": "竞争观察"
         },
         {
@@ -676,7 +677,7 @@
           "name": "伯特利",
           "direction": "扩展观察（机器人底表尚无正式BOM行）",
           "judgment": "当前机器人04/05未找到正式行或一级证据，不冒充现役核心",
-          "portfolio_state": "待现有机器人链补证"
+          "portfolio_state": "竞争观察"
         }
       ],
       "metrics": [
@@ -688,22 +689,22 @@
         {
           "label": "新增一级硬证据",
           "value": "0",
-          "note": "9月29日未发生新的公司级阶段升级"
+          "note": "9月30日没有新的公司级阶段变化"
         },
         {
-          "label": "最新产业扫描",
-          "value": "9月29日已完成",
-          "note": "生产端结果已形成"
+          "label": "产业状态",
+          "value": "强",
+          "note": "长期产业判断保持"
         },
         {
-          "label": "最近正式日报",
-          "value": "9月28日",
-          "note": "未找到9月29日23:00正式日报回执，因此不冒充更新"
+          "label": "市场状态",
+          "value": "弱",
+          "note": "9月30日修复尚未形成连续确认"
         },
         {
-          "label": "组合身份",
-          "value": "竞争观察",
-          "note": "机器人研究对象尚未由light正式日决策赋予组合席位"
+          "label": "正式研究席位",
+          "value": "1",
+          "note": "机器人日报口径；不等于light组合持仓"
         }
       ]
     },
@@ -712,22 +713,22 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "9月30日PIT盘前判断已补做并成为current：4个Target席位，光互联由新易盛领先；Actual仍保持现有5个持仓。"
+          "detail": "10月1日休市，Actual保持不变；当前正式组合判断仍沿用9月30日PIT版本。"
         },
         {
           "item": "价格 / 市场数据",
-          "status": "部分覆盖",
-          "detail": "9月30日盘前重建使用9月29日20/20耐久样本；未使用9月30日开盘后行情。全40只市场结构仍沿用9月28日完整基线。"
+          "status": "正常",
+          "detail": "9月30日固定篮子40/40已完整核验；10月1日休市，按规则复用该快照，不制造新日线。"
         },
         {
           "item": "产业扫描",
           "status": "正常",
-          "detail": "9月30日07:30产业扫描完成并新增Bitdeer一级里程碑；全市场结构部分继续与产业事实分开。"
+          "detail": "10月1日早间复核完成；Helios的A股精确公司映射未获证实，其余开放观察继续跟踪。"
         },
         {
           "item": "宏观 / 政策",
           "status": "正常",
-          "detail": "9月30日07:45深扫与政策投影已完成确定性恢复，92水位已推进。"
+          "detail": "10月1日07:00深扫新增4项宏观/AI信息；强制政策源未发现新的算力硬件限制。"
         },
         {
           "item": "业绩覆盖",
@@ -736,13 +737,13 @@
         },
         {
           "item": "机器人链",
-          "status": "部分覆盖",
-          "detail": "9月29日21:30 producer完成，23:00正式日报也已完成；39/40 clean，单票partial局部隔离。"
+          "status": "正常",
+          "detail": "9月30日生产者和正式日报均完成；39/40范围正常，单对象局部隔离不影响其余研究连续性。"
         },
         {
           "item": "页面发布",
           "status": "更新中",
-          "detail": "已生成9月30日PIT判断公开投影并提交至light独立GitHub Pages仓库。"
+          "detail": "独立GitHub Pages展示层；公共投影采用字段白名单与公开文本双重脱敏。"
         }
       ],
       "technical": {
@@ -757,16 +758,16 @@
         "price_gate": "PIT_RECONSTRUCTION_NO_POST_OPEN_DATA_NO_RETRO_EXECUTION",
         "market_at_decision": "2026-09-29 selected 20/20 durable",
         "market_post_decision_recovery": "not_applicable",
-        "macro_deep": "verified through 2026-09-29T12:33:58+08:00",
+        "macro_deep": "verified through 2026-10-01T07:44:13+08:00",
         "policy_projection": "latest durable 05 at 15:33; 92 projection pending recovery",
         "earnings_main": "partial; full-pool coverage_end not proven",
-        "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-29|v1",
-        "robot_daily": "ROBOT_DAILY|2026-09-29|2300|v1",
+        "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-30|v1",
+        "robot_daily": "ROBOT_DAILY|2026-09-30|2300|v1",
         "trade_permission": false,
         "NEW_content": 0,
-        "market_current_session": "2026-09-29 selected 20/20 durable; full 40 structure pending",
-        "market_last_complete": "2026-09-28 full 40/40",
-        "public_projection_policy": "simulation_only_allowlist_no_execution_ledger",
+        "market_current_session": "2026-10-01 non-trading; reuse 2026-09-30 full 40/40",
+        "market_last_complete": "2026-09-30 full 40/40 verified",
+        "public_projection_policy": "strict_allowlist_plus_public_text_sanitizer",
         "premarket_publish": "verified_manual_pit_no_retro_execution at 2026-09-30T10:30:00+08:00"
       }
     }
