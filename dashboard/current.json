@@ -81,7 +81,7 @@
           "current_pct": 79.8857,
           "budget_range": "50–65%",
           "state": "高机动",
-          "note": "当前Actual现金仍高于战术目标；弱市场下允许继续高现金，后续优先给新易盛首仓或核心回撤提高资本占用。"
+          "note": "复核经营兑现、估值与研究状态。"
         }
       ],
       "decision": {
@@ -98,7 +98,7 @@
           "domain_label": "算力基础设施",
           "weight_pct": 8.6232,
           "role": "PCB核心进攻",
-          "portfolio_state": "当前Actual核心；目标15%，弱市场下不追高",
+          "portfolio_state": "复核经营兑现、估值与研究状态。",
           "simulation_cost": "107.79",
           "last_price": "107.79",
           "simulation_pnl": "0.00 万",
@@ -140,7 +140,7 @@
           "domain_label": "算力基础设施",
           "weight_pct": 3.9816,
           "role": "PCB上游观察",
-          "portfolio_state": "无核心席位；下一可执行窗口优先退出/替换",
+          "portfolio_state": "复核经营兑现、估值与研究状态。",
           "simulation_cost": "44.50",
           "last_price": "44.24",
           "simulation_pnl": "-0.0234 万",
@@ -284,7 +284,7 @@
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
           "target_pct": 15,
-          "next_trigger": "106–112区间且基本面不变时再评估提高资本占用；>114不追",
+          "next_trigger": "复核经营兑现、估值与研究状态。",
           "current_state": "持有"
         },
         {
@@ -311,7 +311,7 @@
           "role": "PCB上游观察",
           "current_pct": 3.9816,
           "target_pct": null,
-          "next_trigger": "无核心seat；下一可执行窗口优先退出/替换",
+          "next_trigger": "复核经营兑现、估值与研究状态。",
           "current_state": "观察"
         },
         {
@@ -332,7 +332,7 @@
           "target_pct": 15,
           "current_pct": 8.6232,
           "state": "已持有",
-          "note": "弱市场下目标压至15%；不追高。"
+          "note": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "301200",
@@ -350,7 +350,7 @@
           "target_pct": 8,
           "current_pct": 0,
           "state": "未持有",
-          "note": "OPTICAL_ALPHA目标席位第一；下一可执行窗口再看380–400附近，不回填当日开盘执行。"
+          "note": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "159516",
@@ -462,7 +462,7 @@
           "theme": "高速光模块",
           "state": "目标席位",
           "reason": "光互联重新竞争胜出，成为OPTICAL_ALPHA第一",
-          "next_step": "下一可执行窗口验证380–400附近赔率与止跌条件"
+          "next_step": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "002979",
@@ -518,7 +518,7 @@
           "sector": "PCB板厂",
           "long_term": "核心",
           "current": "选择性进攻",
-          "reason": "生益电子继续核心，但弱市场下不追高，只在回撤区间配置。"
+          "reason": "复核经营兑现、估值与研究状态。"
         },
         {
           "domain": "算力基础设施",
@@ -792,6 +792,8 @@
     "trade_permission": false,
     "public_projection_allowlist": true,
     "execution_ledger_fields_published": false,
-    "public_text_sanitized": true
+    "public_text_sanitized": true,
+    "public_projection_semantics": "research_and_current_results_only",
+    "execution_conditions_published": false
   }
 }
