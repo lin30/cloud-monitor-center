@@ -77,7 +77,7 @@ function overview(p){
         kpi("模型净值",fmt(o.metrics.nav_wan,2)+" 万","模拟盘")+
         kpi("现金",fmt(o.metrics.cash_wan,2)+" 万",pct(o.metrics.cash_pct))+
         kpi("已投资",pct(o.metrics.invested_pct),"快照模拟暴露")+
-        kpi("核心席位",String(o.metrics.core_seat_count??o.metrics.holding_count)+"/"+String(o.metrics.max_core_seats??7),"实际持仓 "+String(o.metrics.holding_count)+" 个")+
+        kpi("核心席位",String(o.metrics.core_seat_count??o.metrics.holding_count??"—")+"/"+String(o.metrics.max_core_seats??7),"实际持仓 "+String(o.metrics.holding_count??"—")+" 个")+
       '</div><div class="asof">数据时点 '+esc(time(o.metrics.as_of))+'</div>',12)+
     card("快照研究预算",'<div class="section-note">历史研究预算，仅作框架参考；以各来源截至时点为准。</div>'+table(["方向","当前暴露","预算区间","状态","说明"],budgetRows),12)+
     card("快照结论（历史）",
@@ -171,7 +171,7 @@ function snapshotNotice(p){
     (READ_WARNING?'<p class="compat-warning">'+esc(READ_WARNING)+'</p>':'')+sourceTable(p,ids)+'<div class="asof">固定48小时保守展示阈值；日期值按北京时间当天零时计算，不推测节假日续期。缺失、无效或未来时点不判正常。</div></section>';
 }
 function systemStatus(p){
-  const rows=p.modules.status.rows.map(x=>{
+  const rows=(p.modules.status.rows||[]).map(x=>{
     const f=Contract.freshness(p.source_as_of[x.source]?.as_of);
     return {search:[x.item,x.status,x.detail].join(" "),cells:[esc(x.item),badge(f.label,f.tone),esc("快照记录："+x.status),esc(x.detail)]};
   });

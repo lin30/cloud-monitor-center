@@ -45,7 +45,7 @@ test('all unknown dates do not become fresh',()=>{
   assert.ok(C.sourceStates(p,undefined,now).every(x=>x.state==='unknown'));
 });
 test('unknown nested fields and sensitive payload keys fail before rendering',()=>{
-  for(const field of ['funding_source','execution_plan','account_id','access_token','private_notes','next_trigger']){
+  for(const field of ['funding_source','execution_plan','account_id','access_token','private_notes','model_orders']){
     const p=copy();p.modules.watchlist.actual[0][field]='hidden';
     assert.ok(C.validate(p).some(x=>x.includes(field)),field);
   }
@@ -69,7 +69,7 @@ function legacy(){
   for(const x of p.modules.watchlist.actual){delete x.research_focus;x.next_trigger='复核公司公开披露';}
   for(const x of p.modules.status.rows)delete x.source;
   p.modules.status.rows.push({item:'页面发布',status:'更新中',detail:'历史发布记录'});
-  p.modules.status.technical={as_of:'2026-10-08T12:00:00Z',status:'正常'};
+  p.modules.status.technical={macro_deep:'verified through 2026-10-08T12:00:00Z',market_current_session:'2026-10-08'};
   return p;
 }
 test('legacy v1 remains readable with independent stale/unknown dates',()=>{
@@ -77,7 +77,7 @@ test('legacy v1 remains readable with independent stale/unknown dates',()=>{
   assert.deepEqual(r.errors,[]);assert.equal(r.payload.modules.overview.actual.length,5);
   assert.equal(r.payload.modules.watchlist.target[0].target_pct,15);
   assert.deepEqual(C.sourceStates(r.payload,['daily','market','weekly'],now).map(x=>x.state),['stale','stale','unknown']);
-  assert.ok(r.warnings.join('').includes('不代表原始 JSON 已脱敏'));
+  assert.deepEqual(C.validate(p),[]);assert.deepEqual(r.warnings,[]);assert.equal(r.payload.modules.watchlist.actual[0].research_focus,'复核公司公开披露');
 });
 test('dangerous legacy content is hidden without modifying or legitimizing raw JSON',()=>{
   const p=legacy();p.modules.watchlist.actual[0].next_trigger='重回123–125确认承接后再评估';
@@ -144,5 +144,41 @@ test('simulation result, Actual/Target separation and research targets remain',(
   assert.equal(raw.modules.watchlist.target[0].target_pct,15);
   assert.equal(raw.modules.overview.domain_budget[0].budget_range,'35–45%');
   assert.equal(raw.audit.target_actual_separated,true);
+});
+test('production schema and UI markers remain the exact original v3 contract',()=>{
+  assert.equal(C.SCHEMA_VERSION,'cloud_monitor_dashboard.v1');assert.equal(C.UI_VERSION,'light_dashboard_portfolio_v3');
+  assert.equal(raw.schema_version,C.SCHEMA_VERSION);assert.equal(raw.ui_version,C.UI_VERSION);
+  for(const ui of ['light_dashboard_trust_v4','future_ui']){const p=copy();p.ui_version=ui;assert.ok(C.validate(p).some(x=>x.includes('ui_version')));}
+  const cached=copy();cached.ui_version='light_dashboard_trust_v4';const before=structuredClone(cached);const r=C.readSnapshot(cached);
+  assert.deepEqual(r.errors,[]);assert.equal(r.payload.ui_version,C.UI_VERSION);assert.deepEqual(cached,before);
+});
+test('safe legacy v3 publication and normalized v3 roundtrip both pass',()=>{
+  const p=legacy();delete p.audit;
+  assert.deepEqual(C.validate(p),[]);
+  const r=C.readSnapshot(p);assert.deepEqual(r.errors,[]);assert.deepEqual(C.validate(r.payload),[]);
+  const round=C.readSnapshot(JSON.parse(JSON.stringify(r.payload)));assert.deepEqual(round.errors,[]);
+  assert.deepEqual(round.payload,r.payload);assert.equal(round.payload.ui_version,C.UI_VERSION);
+  assert.equal(round.payload.modules.overview.metrics.nav_wan,p.modules.overview.metrics.nav_wan);
+  assert.deepEqual(round.payload.modules.watchlist.target,p.modules.watchlist.target);
+});
+test('trust extensions are optional and missing metadata cannot create freshness',()=>{
+  const p=legacy();delete p.source_as_of;delete p.audit;delete p.generated_at;delete p.snapshot_commit;
+  assert.deepEqual(C.validate(p),[]);const r=C.readSnapshot(p);assert.deepEqual(r.errors,[]);
+  assert.ok(C.sourceStates(r.payload,undefined,now).every(x=>x.state==='unknown'));
+  for(const key of ['overview','weekly','watchlist','opportunities','industry','robotics','status']){const missing=copy();delete missing.modules[key];assert.ok(C.validate(missing).length);}
+});
+test('safe legacy fields never permit actions, private fields or execution windows',()=>{
+  for(const mutate of [p=>p.modules.overview.actions=[],p=>p.modules.watchlist.actual[0].next_trigger='09:30–09:31执行',p=>p.modules.status.technical.account_id='PRIVATE_FIXTURE_ONLY',p=>p.modules.status.technical.trade_permission=true,p=>p.modules.overview.actual[0].shares=100]){
+    const p=legacy();mutate(p);assert.ok(C.validate(p).length);
+  }
+});
+test('research revenue milestones stay public while price-and-funding instructions fail',()=>{
+  const research=legacy();research.modules.watchlist.actual[0].next_trigger='目标公司营业收入突破100亿元后复核研究假设';
+  assert.deepEqual(C.validate(research),[]);
+  assert.equal(C.readSnapshot(research).payload.modules.watchlist.actual[0].research_focus,research.modules.watchlist.actual[0].next_trigger);
+  const unsafe=legacy();unsafe.modules.watchlist.actual[0].next_trigger='若收盘价高于123元，次日09点31分投入2万元';
+  assert.ok(C.validate(unsafe).some(x=>x.includes('非公开执行')));
+  const reading=C.readSnapshot(unsafe);assert.deepEqual(reading.errors,[]);
+  assert.equal(reading.payload.modules.watchlist.actual[0].research_focus,'旧快照执行内容已隐藏');
 });
 console.log(`${count} checks passed; no dependencies, workflow or runner required.`);

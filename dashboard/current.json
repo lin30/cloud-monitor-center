@@ -1,6 +1,6 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
-  "ui_version": "light_dashboard_trust_v4",
+  "ui_version": "light_dashboard_portfolio_v3",
   "trade_permission": false,
   "generated_at": "2026-10-08T11:48:20Z",
   "snapshot_commit": null,
