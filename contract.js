@@ -91,7 +91,39 @@
     if(p.snapshot_commit!=null && !/^[a-f0-9]{40}$/.test(p.snapshot_commit)) errors.push('snapshot_commit 格式异常');
     return errors;
   }
-  const api={NAV,SOURCE_IDS,MODULE_SOURCES,MAX_AGE_MS,EXECUTION_TEXT,timestamp,freshness,sourceStates,validate};
+  // Browser-only compatibility: never modifies, saves, or republishes its input.
+  // The stricter validate() remains the check for raw data BEFORE publication.
+  function readSnapshot(raw) {
+    if (!raw || raw.schema_version!=='cloud_monitor_dashboard.v1' || raw.trade_permission!==false) return {payload:null,errors:['快照版本或研究边界异常'],warnings:[]};
+    const rawErrors=validate(raw);
+    function project(value, rule) {
+      if(typeof rule==='string') return typeof value==='string' && EXECUTION_TEXT.test(value) ? '旧快照执行内容已隐藏' : value;
+      if(Array.isArray(rule)) return Array.isArray(value)?value.map(x=>project(x,rule[0])):value;
+      if(!value || typeof value!=='object' || Array.isArray(value))return value;
+      return Object.fromEntries(Object.keys(rule).filter(k=>Object.hasOwn(value,k)).map(k=>[k,project(value[k],rule[k])]));
+    }
+    const p=project(structuredClone(raw),schema);
+    const source=raw.source_as_of||{};
+    const labels={actual_model:'模拟持仓',daily:'正式日报',market:'已核验行情基线',weekly:'周报',industry:'产业扫描',macro:'宏观 / 政策',earnings:'业绩覆盖',robotics:'机器人日报'};
+    const dateFromId=(value,prefix)=>typeof value==='string'&&value.startsWith(prefix+'|')&&/^\d{4}-\d{2}-\d{2}$/.test(value.split('|')[1])?value.split('|')[1]:null;
+    const marketDate=typeof source.last_complete_market_snapshot==='string'?source.last_complete_market_snapshot.match(/^(\d{4}-\d{2}-\d{2})\s/):null;
+    const oldDates={actual_model:source.actual_model_as_of||null,daily:dateFromId(source.daily,'DAILY'),market:marketDate?marketDate[1]:null,weekly:null,industry:null,macro:source.macro_deep||null,earnings:null,robotics:dateFromId(source.robot_formal_daily,'ROBOT_DAILY')};
+    p.source_as_of=Object.fromEntries(SOURCE_IDS.map(id=>{
+      const explicit=source[id]&&typeof source[id]==='object'&&!Array.isArray(source[id]);
+      const asOf=explicit?source[id].as_of:oldDates[id];
+      return [id,{label:labels[id],as_of:typeof asOf==='string'?asOf:null,note:explicit&&typeof source[id].note==='string'?project(source[id].note,'string'):'旧格式仅采用明确的业务来源日期；缺失为未知，technical、JSON生成和发布时间不作新鲜证据。'}];
+    }));
+    for(const field of ['generated_at','published_at','source_snapshot_generated_at']) if(typeof p[field]!=='string'||!p[field].includes('T')||timestamp(p[field])===null)p[field]=null;
+    if(typeof p.snapshot_commit!=='string'||!/^[a-f0-9]{40}$/.test(p.snapshot_commit))p.snapshot_commit=null;
+    if(Array.isArray(p.modules?.watchlist?.actual))p.modules.watchlist.actual.forEach((row,i)=>{
+      if(row && typeof row==='object' && !Array.isArray(row) && row.research_focus===undefined)row.research_focus=Object.hasOwn(raw.modules.watchlist.actual[i],'next_trigger')?'旧快照执行内容已隐藏':'未提供研究关注';
+    });
+    const statusSources={'当前组合':'daily','价格 / 市场数据':'market','产业扫描':'industry','宏观 / 政策':'macro','业绩覆盖':'earnings','机器人链':'robotics'};
+    if(Array.isArray(p.modules?.status?.rows))p.modules.status.rows=p.modules.status.rows.filter(x=>!x||typeof x!=='object'||Array.isArray(x)||SOURCE_IDS.includes(x.source)||statusSources[x.item]).map(x=>x&&typeof x==='object'&&!Array.isArray(x)?{...x,source:SOURCE_IDS.includes(x.source)?x.source:statusSources[x.item]}:x);
+    const errors=validate(p);
+    return {payload:errors.length?null:p,errors,warnings:rawErrors.length?['旧格式兼容展示：未公开字段和执行文字已在本页隐藏；不代表原始 JSON 已脱敏，发布端仍需清理。']:[]};
+  }
+  const api={NAV,SOURCE_IDS,MODULE_SOURCES,MAX_AGE_MS,EXECUTION_TEXT,timestamp,freshness,sourceStates,validate,readSnapshot};
   if (typeof module!=='undefined' && module.exports) module.exports=api;
   else root.LightContract=api;
 })(typeof globalThis!=='undefined' ? globalThis : this);

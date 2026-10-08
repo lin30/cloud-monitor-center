@@ -2,13 +2,15 @@
 
 Static research and simulated-portfolio snapshot. No dependency installation, build workflow, or custom CI is required. Existing GitHub Pages publishing remains unchanged.
 
-## Fixed pre-publication check
+## Public write contract and optional developer check
 
-Run from this directory:
+The existing publishing task can read `contract.js` as the public-field and content contract. Node execution is not a production prerequisite; no new runner is needed. Do not publish unreviewed source payloads or assume browser hiding protects a publicly accessible JSON file.
+
+For a developer with Node already available, run from this directory:
 
     node tests/verify.js
 
-This command validates `dashboard/current.json` itself before publication, checks the complete public field allowlist, rejects execution conditions in allowed text fields, and tests the same date logic used by the page. Unknown fields fail closed; do not rely on hiding or sanitizing fields in the browser. Never upload unreviewed private source data to this public repository.
+This command validates `dashboard/current.json` itself before publication, checks the complete public field allowlist, rejects execution conditions in allowed text fields, and tests the same date logic used by the page. For a new publication, unknown fields fail the strict check; do not rely on hiding or sanitizing fields in the browser. The browser has a separate read-only adapter for old v1 snapshots: it selects safe fields, hides old execution text, and marks missing source dates unknown instead of rejecting a usable legacy snapshot. It never writes the source back. This does not protect the original public JSON or prove that an existing publisher uses this contract. Never upload unreviewed private source data to this public repository.
 
 Actual simulated holdings, research Target weights and research budgets remain distinct. Specific trading triggers, capital-action instructions, account details, and execution ledgers are not public fields. A text scan is an additional guard, not a substitute for reviewing new public text.
 

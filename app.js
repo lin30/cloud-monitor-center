@@ -2,7 +2,6 @@
 
 const Contract=LightContract;
 const NAV=Contract.NAV;
-const publicProjection=p=>p; // Raw JSON is validated before rendering; no hidden sanitization.
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??"—").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const fmt=(v,d=2)=>v!==null&&v!==""&&Number.isFinite(Number(v))?Number(v).toFixed(d):"—";
@@ -15,6 +14,7 @@ const time=s=>{
 };
 let activeFresh=false;
 let PAYLOAD=null;
+let READ_WARNING="";
 let currentNav="总览";
 
 function badge(text,tone="muted"){
@@ -47,7 +47,6 @@ function roleBadge(s){
 }
 
 function overview(p){
-  p=publicProjection(p);
   const o=p.modules.overview;
   const budgetRows=(o.domain_budget||[]).map(x=>({
     search:[x.domain,x.label,x.state].join(" "),
@@ -95,7 +94,6 @@ function overview(p){
 }
 
 function weekly(p){
-  p=publicProjection(p);
   const w=p.modules.weekly;
   const metrics=(w.metrics||[]).map(x=>({search:x.label,cells:[esc(x.label),'<strong>'+esc(x.value)+'</strong>',esc(x.note||"")]}));
   return '<div class="grid">'+
@@ -106,7 +104,6 @@ function weekly(p){
 }
 
 function watchlist(p){
-  p=publicProjection(p);
   const w=p.modules.watchlist;
   const actual=(w.actual||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
@@ -128,7 +125,6 @@ function watchlist(p){
 }
 
 function opportunities(p){
-  p=publicProjection(p);
   const rows=(p.modules.opportunities.rows||[]).map(x=>({
     search:[x.ticker,x.name,x.theme].join(" "),
     cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',esc(x.theme||"—"),statusBadge(x.state),esc(x.reason||""),esc(x.next_step||"")]
@@ -137,7 +133,6 @@ function opportunities(p){
 }
 
 function industry(p){
-  p=publicProjection(p);
   const rows=(p.modules.industry.rows||[]).map(x=>({
     search:[x.domain,x.sector,x.long_term,x.current].join(" "),
     cells:[esc(x.domain||"—"),'<strong>'+esc(x.sector)+'</strong>',badge(x.long_term,x.long_term==="核心"?"strong":x.long_term==="积极"?"good":"muted"),badge(x.current,x.current==="进攻"?"good":x.current==="风险"?"warn":"info"),esc(x.reason||"")]
@@ -148,7 +143,6 @@ function industry(p){
 }
 
 function robotics(p){
-  p=publicProjection(p);
   const r=p.modules.robotics;
   const rows=(r.rows||[]).map(x=>({
     search:[x.name,x.ticker,x.tier,x.direction,x.portfolio_state].join(" "),
@@ -174,7 +168,7 @@ function snapshotNotice(p){
   const stale=sources.some(x=>x.state==="stale"), unknown=sources.some(x=>x.state==="unknown");
   const title=stale?"历史快照 / 已过期":unknown?"来源时点待确认":"来源在48小时内";
   return '<section class="card snapshot-notice" role="status"><h2>'+esc(title)+'</h2><p>各来源独立核验；公开 JSON 的整理或网页发布不会刷新业务数据时点。页面可读不代表持续生产已恢复。</p>'+
-    sourceTable(p,ids)+'<div class="asof">固定48小时保守展示阈值；日期值按北京时间当天零时计算，不推测节假日续期。缺失、无效或未来时点不判正常。</div></section>';
+    (READ_WARNING?'<p class="compat-warning">'+esc(READ_WARNING)+'</p>':'')+sourceTable(p,ids)+'<div class="asof">固定48小时保守展示阈值；日期值按北京时间当天零时计算，不推测节假日续期。缺失、无效或未来时点不判正常。</div></section>';
 }
 function systemStatus(p){
   const rows=p.modules.status.rows.map(x=>{
@@ -183,7 +177,7 @@ function systemStatus(p){
   });
   return '<div class="grid">'+
     card("来源状态",'<div class="section-note">下列业务状态来自历史记录；时效状态独立计算，不能据旧记录认定当前生产正常。</div>'+table(["环节","当前时效","历史状态","历史说明"],rows),12)+
-    card("页面读取校验",'<div class="notice">本次页面已读取公开 JSON 并通过结构及公开字段校验；没有据此核验生产任务或部署回执。</div>',12)+
+    card("页面读取校验",'<div class="notice">本次页面显示内容通过读取校验；不代表原始公开 JSON 已通过发布审查，也没有据此核验生产任务或部署回执。</div>',12)+
     card("快照与发布口径",table(["字段","值"],[
       {cells:["原快照整理时间",esc(time(p.source_snapshot_generated_at))]},
       {cells:["本次公开 JSON 整理时间",esc(time(p.generated_at))]},
@@ -225,9 +219,10 @@ async function boot(){
   try{
     const res=await fetch("./dashboard/current.json?ts="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const p=await res.json();
-    const errs=validate(p); if(errs.length){fail(errs);return}
-    PAYLOAD=p;
+    const reading=Contract.readSnapshot(await res.json());
+    if(reading.errors.length){fail(reading.errors);return}
+    const p=reading.payload;
+    PAYLOAD=p;READ_WARNING=reading.warnings.join(" ");
     $("#snapshotMeta").textContent="公开 JSON 整理："+time(p.generated_at)+" · "+(p.notice||"模拟盘")+"；业务时点见各来源";
     $("#snapshotHash").textContent=p.snapshot_commit?"快照 "+p.snapshot_commit.slice(0,10):"发布时点 / commit 未写入；以部署回执为准";
     renderNav();renderCurrent();

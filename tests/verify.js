@@ -52,7 +52,7 @@ test('unknown nested fields and sensitive payload keys fail before rendering',()
   const p=copy();p.extra={secret:'example'};assert.ok(C.validate(p).length);
 });
 test('specific execution text fails even inside an allowed field',()=>{
-  for(const value of ['重回244–250确认承接，或225–232止跌后再评估','重新站稳0.70附近且设备景气继续验证后再评估','今日资金动作：加仓','只给最强席位资本，不机械补满','BUY 100 shares']){
+  for(const value of ['重回123–125确认承接，或115–120止跌后再评估','重新站稳42.01附近且设备景气继续验证后再评估','今日资金动作：加仓','只给最强席位资本，不机械补满','BUY 100 shares']){
     const p=copy();p.modules.watchlist.actual[0].research_focus=value;
     assert.ok(C.validate(p).some(x=>x.includes('非公开执行')),value);
   }
@@ -61,6 +61,48 @@ test('missing module, malformed arrays, null metric and trade permission fail',(
   for(const mutate of [p=>delete p.modules.robotics,p=>p.modules.watchlist.actual={},p=>p.modules.overview.metrics.cash_wan=null,p=>p.trade_permission=true,p=>p.snapshot_commit='fake']){
     const p=copy();mutate(p);assert.ok(C.validate(p).length);
   }
+});
+function legacy(){
+  const p=copy();delete p.published_at;delete p.source_snapshot_generated_at;
+  p.generated_at='2026-10-08T12:00:00Z';
+  p.source_as_of={actual_model_as_of:'2026-09-29T16:04:00+08:00',daily:'DAILY|2026-09-30|premarket|example',daily_generated_at:'2026-10-08T12:00:00Z',last_complete_market_snapshot:'2026-09-30 full 40/40 verified',robot_formal_daily:'ROBOT_DAILY|2026-09-30|example',macro_deep:'2026-10-01T07:44:13+08:00'};
+  for(const x of p.modules.watchlist.actual){delete x.research_focus;x.next_trigger='复核公司公开披露';}
+  for(const x of p.modules.status.rows)delete x.source;
+  p.modules.status.rows.push({item:'页面发布',status:'更新中',detail:'历史发布记录'});
+  p.modules.status.technical={as_of:'2026-10-08T12:00:00Z',status:'正常'};
+  return p;
+}
+test('legacy v1 remains readable with independent stale/unknown dates',()=>{
+  const p=legacy();const r=C.readSnapshot(p);
+  assert.deepEqual(r.errors,[]);assert.equal(r.payload.modules.overview.actual.length,5);
+  assert.equal(r.payload.modules.watchlist.target[0].target_pct,15);
+  assert.deepEqual(C.sourceStates(r.payload,['daily','market','weekly'],now).map(x=>x.state),['stale','stale','unknown']);
+  assert.ok(r.warnings.join('').includes('不代表原始 JSON 已脱敏'));
+});
+test('dangerous legacy content is hidden without modifying or legitimizing raw JSON',()=>{
+  const p=legacy();p.modules.watchlist.actual[0].next_trigger='重回123–125确认承接后再评估';
+  p.modules.overview.actual[0].portfolio_state='BUY 100 shares';
+  p.modules.overview.actual[0].account_id='PRIVATE_FIXTURE_ONLY';
+  const before=JSON.stringify(p),r=C.readSnapshot(p);
+  assert.deepEqual(r.errors,[]);assert.ok(C.validate(p).length>0);
+  assert.equal(JSON.stringify(p),before);
+  const displayed=JSON.stringify(r.payload);
+  for(const text of ['123–125','BUY 100','PRIVATE_FIXTURE_ONLY','next_trigger'])assert.ok(!displayed.includes(text),text);
+  assert.ok(!Object.hasOwn(r.payload.modules.status,'technical'));
+  assert.ok(displayed.includes('旧快照执行内容已隐藏'));
+});
+test('read adapter never mutates frozen inputs and reports malformed rows',()=>{
+  function freeze(v){if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
+  const p=legacy(),before=structuredClone(p);freeze(p);
+  assert.deepEqual(C.readSnapshot(p).errors,[]);assert.deepEqual(p,before);
+  for(const mutate of [x=>x.modules.watchlist.actual=[[]],x=>x.modules.status.rows=[null]]){
+    const bad=legacy();mutate(bad);const original=structuredClone(bad);freeze(bad);
+    const r=C.readSnapshot(bad);assert.ok(r.errors.length);assert.deepEqual(bad,original);
+  }
+});
+test('legacy with no dates remains unknown even with fresh technical and generation fields',()=>{
+  const p=legacy();p.source_as_of={};const r=C.readSnapshot(p);
+  assert.deepEqual(r.errors,[]);assert.ok(C.sourceStates(r.payload,undefined,now).every(x=>x.state==='unknown'));
 });
 test('real renderCurrent entry and crossing 48 hours remove green',()=>{
   let clock=now;
@@ -71,7 +113,7 @@ test('real renderCurrent entry and crossing 48 hours remove green',()=>{
   vm.runInContext(fs.readFileSync(path.join(__dirname,'../contract.js'),'utf8'),sandbox);
   const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8').replace(/boot\(\);\s*$/,'');
   vm.runInContext(app,sandbox);
-  sandbox.payload=raw;
+  sandbox.payload=C.readSnapshot(raw).payload;
   for(const name of C.NAV){
     sandbox.name=name;
     vm.runInContext('PAYLOAD=payload; currentNav=name; renderCurrent()',sandbox);
@@ -79,9 +121,11 @@ test('real renderCurrent entry and crossing 48 hours remove green',()=>{
     assert.ok(html.includes('历史快照')||html.includes('时点待确认'));
     assert.ok(!html.includes('badge good'),name);
     assert.ok(!html.includes('decision good'),name);
-    assert.ok(!html.includes('244–250'),name);
+    assert.ok(!html.includes('123–125'),name);
     assert.equal(vm.runInContext('activeFresh',sandbox),false);
   }
+  sandbox.payload=C.readSnapshot(legacy()).payload;
+  for(const name of C.NAV){sandbox.name=name;vm.runInContext('PAYLOAD=payload;currentNav=name;renderCurrent()',sandbox);assert.ok(!nodes['#app'].innerHTML.includes('badge good'));}
   const fresh=copy();for(const x of Object.values(fresh.source_as_of))x.as_of='2026-10-08T12:00:00Z';
   sandbox.payload=fresh;
   vm.runInContext('PAYLOAD=payload; currentNav="算力主线"; renderCurrent()',sandbox);
