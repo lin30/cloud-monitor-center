@@ -12,7 +12,7 @@
     <div class="brand">
       <div class="eyebrow">LIGHT · SIMULATION DASHBOARD</div>
       <h1>云端监控中心</h1>
-      <div id="snapshotMeta" class="meta">正在读取最新快照…</div>
+      <div id="snapshotMeta" class="meta">正在读取公开快照…</div>
     </div>
     <div class="header-tools">
       <label class="search-box">
@@ -27,7 +27,7 @@
 
   <main id="app">
     <section class="card loading">
-      <h2>读取最新数据</h2>
+      <h2>读取公开快照</h2>
       <p>页面固定，数据来自 dashboard/current.json。</p>
     </section>
   </main>
@@ -37,6 +37,8 @@
     <span id="snapshotHash"></span>
   </footer>
 
+  <script src="./contract.js" defer></script>
   <script src="./app.js" defer></script>
 </body>
 </html>
+

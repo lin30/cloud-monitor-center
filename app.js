@@ -1,31 +1,24 @@
 'use strict';
 
-function publicProjection(value) {
-  const privateKey = /^(actions|action|today_action|pending_action|funding_source|execution_source|execution_time|trade_time|trade_price|trade_shares|current_shares|shares|quantity|fills|transactions|model_orders|entry_zone|add_zone|chase_cap|execution_plan)$/i;
-  const executionText = /买入|卖出|加仓|减仓|清仓|首仓|首买|建仓|补仓|止损|追高|不追|成交|持仓调整|提高资本占用|下一可执行窗口|退出\/替换|回撤.{0,12}配置|今日资金动作|今日动作|资金来源|执行来源|\b(?:BUY|SELL)\b/i;
-  if (typeof value === 'string') {
-    return executionText.test(value) ? '复核经营兑现、估值与研究状态。' : value;
-  }
-  if (Array.isArray(value)) return value.map(publicProjection);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value)
-      .filter(([key]) => !privateKey.test(key))
-      .map(([key, item]) => [key, publicProjection(item)]));
-  }
-  return value;
-}
-
-
-const NAV=["总览","周报","关注标的","新机会","算力主线","机器人","系统状态"];
+const Contract=LightContract;
+const NAV=Contract.NAV;
+const publicProjection=p=>p; // Raw JSON is validated before rendering; no hidden sanitization.
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??"—").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-const fmt=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):"—";
-const pct=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d)+"%":"—";
-const time=s=>{if(!s)return"—";if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;try{return new Date(s).toLocaleString("zh-CN",{hour12:false})}catch{return s}};
+const fmt=(v,d=2)=>v!==null&&v!==""&&Number.isFinite(Number(v))?Number(v).toFixed(d):"—";
+const pct=(v,d=2)=>v!==null&&v!==""&&Number.isFinite(Number(v))?Number(v).toFixed(d)+"%":"—";
+const time=s=>{
+  if(!s)return "未知";
+  if(Contract.timestamp(s)===null)return "未知（无效时间）";
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s+"（仅日精度，北京时间）";
+  return new Date(s).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",hour12:false})+" 北京时间";
+};
+let activeFresh=false;
 let PAYLOAD=null;
 let currentNav="总览";
 
 function badge(text,tone="muted"){
+  if(tone==="good"&&!activeFresh)tone="muted";
   return '<span class="badge '+esc(tone)+'">'+esc(text)+'</span>';
 }
 function card(title,body,span=12,extra=""){
@@ -34,10 +27,10 @@ function card(title,body,span=12,extra=""){
 function kpi(label,value,note=""){
   return '<div class="kpi-block"><div class="kpi">'+esc(value)+'</div><div class="label">'+esc(label)+'</div>'+(note?'<div class="kpi-note">'+esc(note)+'</div>':'')+'</div>';
 }
-function table(headers,rows){
+function table(headers,rows,searchable=true){
   if(!rows?.length) return '<div class="empty">暂无数据</div>';
   return '<div class="table-scroll"><table><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+
-    rows.map(r=>'<tr data-search="'+esc(r.search||r.cells.join(" "))+'">'+r.cells.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+
+    rows.map(r=>'<tr'+(searchable?' data-search="'+esc(r.search||r.cells.join(" "))+'"':'')+'>'+r.cells.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+
     '</tbody></table></div>';
 }
 function statusTone(s){
@@ -84,19 +77,19 @@ function overview(p){
       '<div class="kpi-grid">'+
         kpi("模型净值",fmt(o.metrics.nav_wan,2)+" 万","模拟盘")+
         kpi("现金",fmt(o.metrics.cash_wan,2)+" 万",pct(o.metrics.cash_pct))+
-        kpi("已投资",pct(o.metrics.invested_pct),"当前实际暴露")+
+        kpi("已投资",pct(o.metrics.invested_pct),"快照模拟暴露")+
         kpi("核心席位",String(o.metrics.core_seat_count??o.metrics.holding_count)+"/"+String(o.metrics.max_core_seats??7),"实际持仓 "+String(o.metrics.holding_count)+" 个")+
       '</div><div class="asof">数据时点 '+esc(time(o.metrics.as_of))+'</div>',12)+
-    card("当前资金倾向",'<div class="section-note">预算是动态风险区间，不是必须买满的配额；弱方向可以为0。</div>'+table(["方向","当前暴露","预算区间","状态","说明"],budgetRows),12)+
-    card("今日结论",
-      '<div class="decision '+esc(o.decision.tone||"neutral")+'"><div class="decision-title">'+esc(o.decision.title)+'</div><div>'+esc(o.decision.summary)+'</div>'+(o.decision.note?'<div class="decision-note">'+esc(o.decision.note)+'</div>':'')+'</div>',12)+
-    card("Actual Model Portfolio · 当前实际模拟持仓",
-      table(["标的","领域","当前权重","角色","当前状态","去留/竞争状态"],actualRows),12)+
+    card("快照研究预算",'<div class="section-note">历史研究预算，仅作框架参考；以各来源截至时点为准。</div>'+table(["方向","当前暴露","预算区间","状态","说明"],budgetRows),12)+
+    card("快照结论（历史）",
+      '<div class="decision '+esc(activeFresh?o.decision.tone||"neutral":"neutral")+'"><div class="decision-title">'+esc(o.decision.title)+'</div><div>'+esc(o.decision.summary)+'</div>'+(o.decision.note?'<div class="decision-note">'+esc(o.decision.note)+'</div>':'')+'</div>',12)+
+    card("Actual Model Portfolio · 快照模拟持仓",
+      table(["标的","领域","快照权重","角色","快照状态","去留/竞争状态"],actualRows),12)+
     card("Portfolio 席位 · 新机会先竞争旧席位",
-      table(["席位","当前第一/占有者","竞争者","状态","说明"],seatRows),12)+
+      table(["席位","快照第一/占有者","竞争者","状态","说明"],seatRows),12)+
     card("Risk Family · 实际暴露",
       table(["风险族","实际权重","说明"],riskRows),12)+
-    card("你真正需要关注的变化",
+    card("快照研究记录",
       '<ul class="focus-list">'+(o.focus||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>',12)+
   '</div>';
 }
@@ -106,7 +99,7 @@ function weekly(p){
   const w=p.modules.weekly;
   const metrics=(w.metrics||[]).map(x=>({search:x.label,cells:[esc(x.label),'<strong>'+esc(x.value)+'</strong>',esc(x.note||"")]}));
   return '<div class="grid">'+
-    card("上周结论",'<div class="decision '+esc(w.tone||"neutral")+'"><div class="decision-title">'+esc(w.title)+'</div><div>'+esc(w.summary)+'</div></div>',12)+
+    card("周报结论（原截止日）",'<div class="decision '+esc(activeFresh?w.tone||"neutral":"neutral")+'"><div class="decision-title">'+esc(w.title)+'</div><div>'+esc(w.summary)+'</div></div>',12)+
     card("关键指标",table(["项目","结果","说明"],metrics),12)+
     card("时间口径",'<div class="notice">'+esc(w.note)+'</div>',12)+
   '</div>';
@@ -117,7 +110,7 @@ function watchlist(p){
   const w=p.modules.watchlist;
   const actual=(w.actual||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
-    cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',roleBadge(x.role),pct(x.current_pct),x.target_pct==null?'—':pct(x.target_pct),currentStateBadge(x.current_state),esc(x.next_trigger||"")]
+    cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',roleBadge(x.role),pct(x.current_pct),x.target_pct==null?'—':pct(x.target_pct),currentStateBadge(x.current_state),esc(x.research_focus||"")]
   }));
   const target=(w.target||[]).map(x=>({
     search:[x.ticker,x.name,x.role].join(" "),
@@ -128,9 +121,9 @@ function watchlist(p){
     cells:['<strong>'+esc(x.name)+'</strong><div class="sub">'+esc(x.ticker)+'</div>',statusBadge(x.state),x.current_pct?pct(x.current_pct):"—",esc(x.note||"")]
   }));
   return '<div class="grid">'+
-    card("A · Actual 当前持仓",table(["标的","角色","当前权重","目标上限","当前状态","下一关注"],actual),12)+
-    card("B · Target 目标组合",'<div class="section-note">目标/上限，不等于已持有。</div>'+table(["标的","角色","目标","当前","状态","说明"],target),12)+
-    card("C · Replacement 候补池",'<div class="section-note">候补观察，不等于正式买入建议。</div>'+table(["标的","状态","当前权重","说明"],repl),12)+
+    card("A · Actual 快照模拟持仓",table(["标的","角色","快照权重","目标上限","快照状态","研究关注"],actual),12)+
+    card("B · Target 目标组合",'<div class="section-note">历史研究目标/上限，不等于已持有；不据此生成资金动作。</div>'+table(["标的","角色","目标","当前","状态","说明"],target),12)+
+    card("C · Replacement 候补池",'<div class="section-note">候补观察，不等于正式买入建议。</div>'+table(["标的","状态","快照权重","说明"],repl),12)+
   '</div>';
 }
 
@@ -150,7 +143,7 @@ function industry(p){
     cells:[esc(x.domain||"—"),'<strong>'+esc(x.sector)+'</strong>',badge(x.long_term,x.long_term==="核心"?"strong":x.long_term==="积极"?"good":"muted"),badge(x.current,x.current==="进攻"?"good":x.current==="风险"?"warn":"info"),esc(x.reason||"")]
   }));
   return '<div class="grid">'+
-    card("算力主线",'<div class="section-note">基础设施与算力应用统一进入100万科技组合；研究可以开放，Portfolio席位保持有限。</div>'+table(["领域","主线","长期状态","当前状态","核心原因"],rows),12)+
+    card("算力主线",'<div class="section-note">基础设施与算力应用统一进入100万科技组合；研究可以开放，Portfolio席位保持有限。</div>'+table(["领域","主线","长期状态","快照状态","核心原因"],rows),12)+
   '</div>';
 }
 
@@ -163,35 +156,46 @@ function robotics(p){
   }));
   const metrics=(r.metrics||[]).map(x=>({search:x.label,cells:[esc(x.label),'<strong>'+esc(x.value)+'</strong>',esc(x.note||"")]}));
   return '<div class="grid">'+
-    card("机器人一句话",'<div class="decision '+esc(r.tone||"neutral")+'"><div class="decision-title">'+esc(r.title)+'</div><div>'+esc(r.summary)+'</div></div>',12)+
+    card("机器人一句话",'<div class="decision '+esc(activeFresh?r.tone||"neutral":"neutral")+'"><div class="decision-title">'+esc(r.title)+'</div><div>'+esc(r.summary)+'</div></div>',12)+
     card("重点梯队",'<div class="section-note">股票名称优先展示；重点梯队用于研究和Portfolio竞争，不等于全部都要买。</div>'+table(["梯队","股票","方向","当前判断","Portfolio状态"],rows),12)+
     card("产业与链路状态",table(["项目","结果","说明"],metrics),12)+
   '</div>';
 }
 
+function sourceTable(p,ids){
+  return table(["来源","业务数据截至","时效状态","口径"],Contract.sourceStates(p,ids).map(x=>({
+    search:[x.label,x.as_of,x.label].join(" "),
+    cells:[esc(x.label),esc(time(x.as_of)),badge(x.state==="fresh"?"48小时内":x.state==="stale"?"历史快照 / 已过期":x.as_of?"时点异常":"时点未知",x.tone),esc(x.note)]
+  })),false);
+}
+function snapshotNotice(p){
+  const ids=Contract.MODULE_SOURCES[currentNav];
+  const sources=Contract.sourceStates(p,ids);
+  const stale=sources.some(x=>x.state==="stale"), unknown=sources.some(x=>x.state==="unknown");
+  const title=stale?"历史快照 / 已过期":unknown?"来源时点待确认":"来源在48小时内";
+  return '<section class="card snapshot-notice" role="status"><h2>'+esc(title)+'</h2><p>各来源独立核验；公开 JSON 的整理或网页发布不会刷新业务数据时点。页面可读不代表持续生产已恢复。</p>'+
+    sourceTable(p,ids)+'<div class="asof">固定48小时保守展示阈值；日期值按北京时间当天零时计算，不推测节假日续期。缺失、无效或未来时点不判正常。</div></section>';
+}
 function systemStatus(p){
-  p=publicProjection(p);
-  const s=p.modules.status;
-  const rows=(s.rows||[]).map(x=>({
-    search:[x.item,x.status,x.detail].join(" "),
-    cells:['<strong>'+esc(x.item)+'</strong>',statusBadge(x.status),esc(x.detail)]
-  }));
+  const rows=p.modules.status.rows.map(x=>{
+    const f=Contract.freshness(p.source_as_of[x.source]?.as_of);
+    return {search:[x.item,x.status,x.detail].join(" "),cells:[esc(x.item),badge(f.label,f.tone),esc("快照记录："+x.status),esc(x.detail)]};
+  });
   return '<div class="grid">'+
-    card("系统状态",'<div class="section-note">这里只保留你需要知道的健康度；内部字段默认收起。</div>'+table(["环节","状态","说明"],rows),12)+
-    card("技术详情",'<details class="technical"><summary>展开内部字段 / 回执 / 数据ID</summary><pre>'+esc(JSON.stringify(s.technical||{},null,2))+'</pre></details>',12)+
+    card("来源状态",'<div class="section-note">下列业务状态来自历史记录；时效状态独立计算，不能据旧记录认定当前生产正常。</div>'+table(["环节","当前时效","历史状态","历史说明"],rows),12)+
+    card("页面读取校验",'<div class="notice">本次页面已读取公开 JSON 并通过结构及公开字段校验；没有据此核验生产任务或部署回执。</div>',12)+
+    card("快照与发布口径",table(["字段","值"],[
+      {cells:["原快照整理时间",esc(time(p.source_snapshot_generated_at))]},
+      {cells:["本次公开 JSON 整理时间",esc(time(p.generated_at))]},
+      {cells:["发布完成时间",esc(p.published_at?time(p.published_at):"未知；以独立部署回执为准")]},
+      {cells:["快照 commit",esc(p.snapshot_commit||"未写入；不推测当前部署 SHA")]}
+    ]),12)+
   '</div>';
 }
 
 const renderers={"总览":overview,"周报":weekly,"关注标的":watchlist,"新机会":opportunities,"算力主线":industry,"机器人":robotics,"系统状态":systemStatus};
 
-function validate(p){
-  const errs=[];
-  if(p.schema_version!=="cloud_monitor_dashboard.v1") errs.push("schema_version 不匹配");
-  if(p.trade_permission!==false) errs.push("安全边界异常");
-  if((p.navigation||[]).map(x=>x.label).join("|")!==NAV.join("|")) errs.push("导航合同不匹配");
-  if(!p.modules?.overview?.metrics) errs.push("缺少结构化 overview.metrics");
-  return errs;
-}
+function validate(p){return Contract.validate(p);}
 function renderNav(){
   const nav=$("#nav"); nav.innerHTML="";
   NAV.forEach(name=>{
@@ -207,24 +211,30 @@ function applySearch(){
   });
 }
 function renderCurrent(){
-  $("#app").innerHTML=renderers[currentNav](PAYLOAD);
+  activeFresh=Contract.sourceStates(PAYLOAD,Contract.MODULE_SOURCES[currentNav]).every(x=>x.state==="fresh");
+  $("#app").innerHTML=snapshotNotice(PAYLOAD)+renderers[currentNav](PAYLOAD);
   applySearch();
 }
 function fail(errors){
+  $("#snapshotMeta").textContent="快照不可用；未确认数据或生产状态";
+  $("#snapshotHash").textContent="";
+  $("#nav").innerHTML="";
   $("#app").innerHTML='<section class="fail"><h2>数据暂不可展示</h2><p>当前快照校验没有通过。</p><ul>'+errors.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul></section>';
 }
 async function boot(){
   try{
     const res=await fetch("./dashboard/current.json?ts="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const p=publicProjection(await res.json());
+    const p=await res.json();
     const errs=validate(p); if(errs.length){fail(errs);return}
     PAYLOAD=p;
-    $("#snapshotMeta").textContent="数据更新 "+time(p.generated_at)+" · "+esc(p.notice||"模拟盘");
-    $("#snapshotHash").textContent="快照 "+String(p.snapshot_commit||"").slice(0,10);
+    $("#snapshotMeta").textContent="公开 JSON 整理："+time(p.generated_at)+" · "+(p.notice||"模拟盘")+"；业务时点见各来源";
+    $("#snapshotHash").textContent=p.snapshot_commit?"快照 "+p.snapshot_commit.slice(0,10):"发布时点 / commit 未写入；以部署回执为准";
     renderNav();renderCurrent();
     $("#tableSearch").addEventListener("input",applySearch);
+    setInterval(renderCurrent,60000);
   }catch(e){fail(["无法读取最新数据："+e.message])}
 }
 boot();
+
 

@@ -1,20 +1,51 @@
 {
   "schema_version": "cloud_monitor_dashboard.v1",
-  "ui_version": "light_dashboard_portfolio_v3",
+  "ui_version": "light_dashboard_trust_v4",
   "trade_permission": false,
-  "generated_at": "2026-10-01T16:15:00+08:00",
+  "generated_at": "2026-10-08T11:48:20Z",
   "snapshot_commit": null,
-  "notice": "模拟盘 / 仅研究",
+  "notice": "模拟盘 / 仅研究 / 历史记录",
   "source_as_of": {
-    "contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
-    "daily": "DAILY|2026-09-30|premarket|v2_manual_pit",
-    "daily_generated_at": "2026-09-30T10:30:00+08:00",
-    "actual_model_as_of": "2026-09-29T16:04:00+08:00",
-    "last_complete_market_snapshot": "2026-09-30 full 40/40 verified at 2026-09-30T21:46:30+08:00",
-    "current_market_session": "2026-10-01 A-share non-trading day; reuse 2026-09-30 verified 40/40 snapshot",
-    "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-30|v1",
-    "robot_formal_daily": "ROBOT_DAILY|2026-09-30|2300|v1",
-    "macro_deep": "2026-10-01T07:44:13+08:00"
+    "actual_model": {
+      "label": "模拟持仓",
+      "as_of": "2026-09-29T16:04:00+08:00",
+      "note": "沿用原快照 actual_model_as_of；未重新计算模拟组合。"
+    },
+    "daily": {
+      "label": "正式日报",
+      "as_of": "2026-09-30",
+      "note": "原快照正式日报日期为9月30日；其决策行情输入截至9月29日。原10:30为发布/生成记录，不用作行情时点。"
+    },
+    "market": {
+      "label": "已核验行情基线",
+      "as_of": "2026-09-30",
+      "note": "原快照记录为9月30日完整40/40基线，区别于该盘前决策使用的9月29日输入；仅日精度，不把核验时间当行情时间。"
+    },
+    "weekly": {
+      "label": "周报",
+      "as_of": "2026-09-26",
+      "note": "原周报明确截止9月26日；仅日精度。"
+    },
+    "industry": {
+      "label": "产业扫描",
+      "as_of": null,
+      "note": "原快照描述10月1日早间复核，但没有独立、可核验的来源截至时间。"
+    },
+    "macro": {
+      "label": "宏观 / 政策",
+      "as_of": "2026-10-01T07:44:13+08:00",
+      "note": "沿用原快照 macro_deep。"
+    },
+    "earnings": {
+      "label": "业绩覆盖",
+      "as_of": null,
+      "note": "全池覆盖截止尚未完整证明。"
+    },
+    "robotics": {
+      "label": "机器人日报",
+      "as_of": "2026-09-30",
+      "note": "原报告标识对应9月30日；仅日精度，不推测生成时刻。"
+    }
   },
   "navigation": [
     {
@@ -65,7 +96,7 @@
           "current_pct": 20.0735,
           "budget_range": "35–45%",
           "state": "选择性进攻",
-          "note": "产业与公司基本面仍最强，但沪深300/创业板均低于MA20/MA60；只给最强席位资本，不机械补满。"
+          "note": "原快照：产业与公司基本面仍较强；沪深300/创业板均低于MA20/MA60，市场结构偏弱。"
         },
         {
           "domain": "APPLICATION",
@@ -73,7 +104,7 @@
           "current_pct": 0,
           "budget_range": "0–5%",
           "state": "观察",
-          "note": "机器人长期产业状态仍强，但市场修复仅第1日且价格执行核验有限；今天不授予正式应用席位。"
+          "note": "原快照：机器人长期产业状态仍强，市场修复仅第1日且价格核验有限；应用席位为研究观察。"
         },
         {
           "domain": "CASH",
@@ -112,7 +143,7 @@
           "domain_label": "算力基础设施",
           "weight_pct": 2.2996,
           "role": "PCB设备核心进攻",
-          "portfolio_state": "当前Actual核心；目标10%，趋势未稳前暂停新增",
+          "portfolio_state": "复核经营兑现、估值与研究状态。",
           "simulation_cost": "229.96",
           "last_price": "229.96",
           "simulation_pnl": "0.00 万",
@@ -177,7 +208,7 @@
           "leader": "大族数控",
           "challengers": "东威科技",
           "state": "已占用 · 观察",
-          "note": "大族数控保留主席，但经营现金流和下行趋势使新增资本暂缓。"
+          "note": "复核经营兑现、估值与研究状态。"
         },
         {
           "seat": "OPTICAL_ALPHA",
@@ -201,7 +232,7 @@
           "leader": "空缺",
           "challengers": "雷赛智能 / 拓普集团 / 绿的谐波 / 北特科技",
           "state": "观察",
-          "note": "机器人产业状态强，但市场修复仅第1日，且最近日报价格执行核验受限；今天不占席。"
+          "note": "原快照：机器人产业状态较强，但市场修复仅第1日、价格核验有限；应用席位为研究观察。"
         },
         {
           "seat": "APPLICATION_ALPHA_2",
@@ -217,7 +248,7 @@
           "leader": "空缺",
           "challengers": "罗博特科 / 联讯仪器 / 博众精工等",
           "state": "保留",
-          "note": "设备链证据强，但当前价格和市场环境不支持扩张持仓数量。"
+          "note": "复核经营兑现、估值与研究状态。"
         }
       ],
       "risk_family": [
@@ -284,8 +315,8 @@
           "role": "PCB核心进攻",
           "current_pct": 8.6232,
           "target_pct": 15,
-          "next_trigger": "复核经营兑现、估值与研究状态。",
-          "current_state": "持有"
+          "current_state": "持有",
+          "research_focus": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "301200",
@@ -293,8 +324,8 @@
           "role": "PCB设备核心进攻",
           "current_pct": 2.2996,
           "target_pct": 10,
-          "next_trigger": "重回244–250确认承接，或225–232止跌后再评估",
-          "current_state": "持有"
+          "current_state": "持有",
+          "research_focus": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "159516",
@@ -302,8 +333,8 @@
           "role": "半导体设备小型底仓",
           "current_pct": 3.325,
           "target_pct": 5,
-          "next_trigger": "重新站稳0.70附近且设备景气继续验证后再评估",
-          "current_state": "持有"
+          "current_state": "持有",
+          "research_focus": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "301150",
@@ -311,8 +342,8 @@
           "role": "PCB上游观察",
           "current_pct": 3.9816,
           "target_pct": null,
-          "next_trigger": "复核经营兑现、估值与研究状态。",
-          "current_state": "观察"
+          "current_state": "观察",
+          "research_focus": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "688700",
@@ -320,8 +351,8 @@
           "role": "PCB设备候补持仓",
           "current_pct": 1.8441,
           "target_pct": null,
-          "next_trigger": "继续与大族数控比较订单兑现与赔率，不新增",
-          "current_state": "观察"
+          "current_state": "观察",
+          "research_focus": "复核经营兑现、估值与研究状态。"
         }
       ],
       "target": [
@@ -341,7 +372,7 @@
           "target_pct": 10,
           "current_pct": 2.2996,
           "state": "已持有",
-          "note": "基本面强但现金流/趋势约束，暂停新增。"
+          "note": "复核经营兑现、估值与研究状态。"
         },
         {
           "ticker": "300502",
@@ -497,7 +528,7 @@
           "sector": "PCB设备/耗材",
           "long_term": "核心",
           "current": "观察",
-          "reason": "大族数控基本面强，但趋势和现金流约束新增资本。"
+          "reason": "复核经营兑现、估值与研究状态。"
         },
         {
           "domain": "算力基础设施",
@@ -553,7 +584,7 @@
           "sector": "国产GPU/ASIC",
           "long_term": "中性",
           "current": "观察",
-          "reason": "保持跟踪，暂不扩大资本占用"
+          "reason": "复核经营兑现、估值与研究状态。"
         },
         {
           "domain": "算力基础设施",
@@ -713,63 +744,40 @@
         {
           "item": "当前组合",
           "status": "正常",
-          "detail": "10月1日休市，Actual保持不变；当前正式组合判断仍沿用9月30日PIT版本。"
+          "detail": "10月1日休市，Actual保持不变；当前正式组合判断仍沿用9月30日PIT版本。",
+          "source": "daily"
         },
         {
           "item": "价格 / 市场数据",
           "status": "正常",
-          "detail": "9月30日固定篮子40/40已完整核验；10月1日休市，按规则复用该快照，不制造新日线。"
+          "detail": "9月30日固定篮子40/40已完整核验；10月1日休市，按规则复用该快照，不制造新日线。",
+          "source": "market"
         },
         {
           "item": "产业扫描",
           "status": "正常",
-          "detail": "10月1日早间复核完成；Helios的A股精确公司映射未获证实，其余开放观察继续跟踪。"
+          "detail": "10月1日早间复核完成；Helios的A股精确公司映射未获证实，其余开放观察继续跟踪。",
+          "source": "industry"
         },
         {
           "item": "宏观 / 政策",
           "status": "正常",
-          "detail": "10月1日07:00深扫新增4项宏观/AI信息；强制政策源未发现新的算力硬件限制。"
+          "detail": "10月1日07:00深扫新增4项宏观/AI信息；强制政策源未发现新的算力硬件限制。",
+          "source": "macro"
         },
         {
           "item": "业绩覆盖",
           "status": "部分覆盖",
-          "detail": "全池覆盖截止尚未完整证明；已验证公司的历史事实继续有效"
+          "detail": "全池覆盖截止尚未完整证明；已验证公司的历史事实继续有效",
+          "source": "earnings"
         },
         {
           "item": "机器人链",
           "status": "正常",
-          "detail": "9月30日生产者和正式日报均完成；39/40范围正常，单对象局部隔离不影响其余研究连续性。"
-        },
-        {
-          "item": "页面发布",
-          "status": "更新中",
-          "detail": "独立GitHub Pages展示层；公共投影采用字段白名单与公开文本双重脱敏。"
+          "detail": "9月30日生产者和正式日报均完成；39/40范围正常，单对象局部隔离不影响其余研究连续性。",
+          "source": "robotics"
         }
-      ],
-      "technical": {
-        "active_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
-        "schema_revision": "SCHEMA|2026-09-27|cloud_light_integrated_v2_2",
-        "daily_id": "DAILY|2026-09-30|premarket|v2_manual_pit",
-        "daily_contract": "CONTRACT|2026-09-29|cloud_light_integrated_v3_0_portfolio_allocator",
-        "daily_v3_fields_present": true,
-        "domain_budget_source": "manual_pit_formal_daily",
-        "portfolio_seats_source": "PORTBOOK|2026-09-30|manual_pit_v1",
-        "application_watch_source": "active_contract_low_frequency_watchlist",
-        "price_gate": "PIT_RECONSTRUCTION_NO_POST_OPEN_DATA_NO_RETRO_EXECUTION",
-        "market_at_decision": "2026-09-29 selected 20/20 durable",
-        "market_post_decision_recovery": "not_applicable",
-        "macro_deep": "verified through 2026-10-01T07:44:13+08:00",
-        "policy_projection": "latest durable 05 at 15:33; 92 projection pending recovery",
-        "earnings_main": "partial; full-pool coverage_end not proven",
-        "robot_handoff": "ROBOT_REPORT_HANDOFF|2026-09-30|v1",
-        "robot_daily": "ROBOT_DAILY|2026-09-30|2300|v1",
-        "trade_permission": false,
-        "NEW_content": 0,
-        "market_current_session": "2026-10-01 non-trading; reuse 2026-09-30 full 40/40",
-        "market_last_complete": "2026-09-30 full 40/40 verified",
-        "public_projection_policy": "strict_allowlist_plus_public_text_sanitizer",
-        "premarket_publish": "verified_manual_pit_no_retro_execution at 2026-09-30T10:30:00+08:00"
-      }
+      ]
     }
   },
   "audit": {
@@ -795,5 +803,7 @@
     "public_text_sanitized": true,
     "public_projection_semantics": "research_and_current_results_only",
     "execution_conditions_published": false
-  }
+  },
+  "source_snapshot_generated_at": "2026-10-01T16:15:00+08:00",
+  "published_at": null
 }
